@@ -1,4 +1,4 @@
-Import React, { useState } from "react";
+import React, { useState } from "react";
 import Nav from "./components/Nav";
 import Today from "./pages/Today";
 import Jobs from "./pages/Jobs";
