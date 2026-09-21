@@ -1,0 +1,1 @@
+import React from"react";export default function Customers(){return <><h1>Customers</h1><p className="muted">Customer history, jobs, prices and Rivetara business memory.</p><div className="card"><p className="empty">No customers yet.</p></div></>}
