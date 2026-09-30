@@ -87,7 +87,7 @@ export default function AI({ done }) {
      <button
        className={on ? "listen" : ""}
        onClick={tap}
-       disabled={busy}
+       disabled={busy}>
 
        {on ? <Square /> : <Sparkles />}
      </button>
