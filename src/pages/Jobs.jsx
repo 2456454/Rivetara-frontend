@@ -1,1 +1,52 @@
-import React,{useEffect,useState}from"react";import{list}from"../lib/api";export default function Jobs(){let[x,setX]=useState([]);useEffect(()=>{list("jobs").then(v=>setX(v||[])).catch(()=>{})},[]);return <><h1>Jobs</h1><p className="muted">Current work and complete job history.</p><div className="card">{x.length?x.map(j=><div className="row"><div><b>{j.title}</b><small>{j.customer_name||"Customer"} · {j.status}</small></div></div>):<p className="empty">No jobs yet. Tell Rivetara when the first one comes in.</p>}</div><div className="card"><h3>Old jobs</h3><p className="muted">Archive: year → month → date.</p></div></>}
+import React, { useEffect, useState } from "react";
+import { list } from "../lib/api";
+
+export default function Jobs() {
+ const [jobs, setJobs] = useState([]);
+
+ useEffect(() => {
+   let active = true;
+
+   async function loadJobs() {
+     try {
+       const data = await list("jobs");
+
+       if (active) {
+         setJobs(Array.isArray(data) ? data : []);
+       }
+     } catch (error) {
+       console.error("Failed to load jobs:", error);
+
+       if (active) {
+         setJobs([]);
+       }
+     }
+   }
+
+   loadJobs();
+
+   return () => {
+     active = false;
+   };
+ }, []);
+
+ return (
+   <div>
+     <h1>Jobs</h1>
+
+     {jobs.length === 0 ? (
+       <div className="card">
+         <h3>No jobs yet</h3>
+         <p>Tell Rivetara when the first one comes in.</p>
+       </div>
+     ) : (
+       jobs.map((job, index) => (
+         <div className="card" key={job?.id || index}>
+           <b>{job?.customer_name || "Customer"}</b>
+           <small>{job?.status || ""}</small>
+         </div>
+       ))
+     )}
+   </div>
+ );
+}
