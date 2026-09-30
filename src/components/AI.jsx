@@ -1,4 +1,18 @@
-chSynthesisUtterance(t));
+import React, { useRef, useState } from "react";
+import { Sparkles, Square } from "lucide-react";
+import { ai } from "../lib/api";
+
+export default function AI({ done }) {
+ const [on, setOn] = useState(false);
+ const [busy, setBusy] = useState(false);
+ const rec = useRef(null);
+
+ function speak(text) {
+   if ("speechSynthesis" in window) {
+     window.speechSynthesis.cancel();
+
+     const utterance = new SpeechSynthesisUtterance(text);
+     window.speechSynthesis.speak(utterance);
    }
  }
 
@@ -8,9 +22,14 @@ chSynthesisUtterance(t));
    try {
      const r = await ai(q);
      const reply = r?.reply || "Done.";
+
      speak(reply);
-     done?.(r);
-   } catch {
+
+     if (typeof done === "function") {
+       done(r);
+     }
+   } catch (error) {
+     console.error("Rivetara AI error:", error);
      speak("I couldn't complete that.");
    } finally {
      setBusy(false);
@@ -19,32 +38,47 @@ chSynthesisUtterance(t));
 
  function tap() {
    if (on) {
-     rec.current?.stop();
+     if (rec.current) {
+       rec.current.stop();
+     }
+
      setOn(false);
      return;
    }
 
-   const R =
+   const SpeechRecognition =
      window.SpeechRecognition || window.webkitSpeechRecognition;
 
-   if (!R) {
-     const q = prompt("Tell Rivetara what you need");
-     if (q) run(q);
+   if (!SpeechRecognition) {
+     const q = window.prompt("Tell Rivetara what you need");
+
+     if (q) {
+       run(q);
+     }
+
      return;
    }
 
-   const r = new R();
+   const recognition = new SpeechRecognition();
 
-   rec.current = r;
-   r.lang = "en-GB";
+   rec.current = recognition;
+   recognition.lang = "en-GB";
 
-   r.onresult = (e) => run(e.results[0][0].transcript);
+   recognition.onresult = (event) => {
+     const transcript = event.results[0][0].transcript;
+     run(transcript);
+   };
 
-   r.onend = () => {
+   recognition.onend = () => {
      setOn(false);
    };
 
-   r.start();
+   recognition.onerror = (event) => {
+     console.error("Speech recognition error:", event);
+     setOn(false);
+   };
+
+   recognition.start();
    setOn(true);
  }
 
@@ -59,7 +93,10 @@ chSynthesisUtterance(t));
      </button>
 
      <div>
-       <b>{on ? "Listening…" : busy ? "Working…" : "Rivetara AI"}</b>
+       <b>
+         {on ? "Listening…" : busy ? "Working…" : "Rivetara AI"}
+       </b>
+
        <small>
          {on
            ? "Tap again to stop"
