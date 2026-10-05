@@ -21,12 +21,17 @@ export default function AI({ done }) {
 
    try {
      const r = await ai(q);
-     const reply = r?.reply || "Done.";
+
+     if (!r) {
+       throw new Error("No response from Rivetara backend");
+     }
+
+     const reply = r.reply || "Request completed.";
 
      speak(reply);
 
      if (typeof done === "function") {
-       done(r);
+       done(reply);
      }
    } catch (error) {
      console.error("Rivetara AI error:", error);
