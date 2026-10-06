@@ -1,52 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { list } from "../lib/api";
-
-export default function Jobs() {
- const [jobs, setJobs] = useState([]);
-
- useEffect(() => {
-   let active = true;
-
-   async function loadJobs() {
-     try {
-       const data = await list("jobs");
-
-       if (active) {
-         setJobs(Array.isArray(data) ? data : []);
-       }
-     } catch (error) {
-       console.error("Failed to load jobs:", error);
-
-       if (active) {
-         setJobs([]);
-       }
-     }
-   }
-
-   loadJobs();
-
-   return () => {
-     active = false;
-   };
- }, []);
-
- return (
-   <div>
-     <h1>Jobs</h1>
-
-     {jobs.length === 0 ? (
-       <div className="card">
-         <h3>No jobs yet</h3>
-         <p>Tell Rivetara when the first one comes in.</p>
-       </div>
-     ) : (
-       jobs.map((job, index) => (
-         <div className="card" key={job?.id || index}>
-           <b>{job?.customer_name || "Customer"}</b>
-           <small>{job?.status || ""}</small>
-         </div>
-       ))
-     )}
-   </div>
- );
+import React, {useEffect,useState} from 'react';
+import {api,list} from '../lib/api';
+export default function Jobs(){
+ const [jobs,setJobs]=useState([]),[title,setTitle]=useState(''),[customer,setCustomer]=useState(''),[date,setDate]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState(''),[loading,setLoading]=useState(true),[notice,setNotice]=useState('');
+ useEffect(()=>{let active=true;list('jobs').then(x=>{if(active)setJobs(Array.isArray(x)?x:[]);}).catch(()=>{if(active)setError('Could not load jobs. Refresh to try again.');}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
+ async function save(e){e.preventDefault();if(busy)return;setBusy(true);setError('');setNotice('');try{const row=await api('/api/jobs',{method:'POST',body:JSON.stringify({title:title.trim(),customer_name:customer.trim(),scheduled_for:date?new Date(date).toISOString():null})});setJobs(x=>[row,...x]);setTitle('');setCustomer('');setDate('');setNotice('Job saved.');}catch{setError('Could not confirm the save. Refresh your jobs before retrying.');}finally{setBusy(false);}}
+ return <><h1>Jobs</h1><form className="card job-form" onSubmit={save}><h3>Add a job</h3><label htmlFor="job-title">What’s the job?</label><input id="job-title" value={title} onChange={e=>setTitle(e.target.value)} required maxLength={200} placeholder="Replace kitchen tap"/><details><summary>Add optional details</summary><label htmlFor="job-customer">Customer</label><input id="job-customer" value={customer} onChange={e=>setCustomer(e.target.value)}/><label htmlFor="job-date">Date and time</label><input id="job-date" type="datetime-local" value={date} onChange={e=>setDate(e.target.value)}/></details><button className="soft" disabled={busy||!title.trim()}>{busy?'Saving…':'Save job'}</button><p role="status">{notice}</p></form>{error&&<p role="alert">{error}</p>}{loading?<p>Loading jobs…</p>:jobs.length===0?<div className="card"><h3>No jobs yet</h3><p>Add a short description or tell Rivetara when the first one comes in.</p></div>:jobs.map(j=><article className="card" key={j.id}><h3>{j.title||j.description||'Job'}</h3>{j.customer_name&&<p>{j.customer_name}</p>}<small>{j.status}{j.scheduled_for?' · '+new Date(j.scheduled_for).toLocaleString('en-GB'):''}</small></article>)}</>;
 }
