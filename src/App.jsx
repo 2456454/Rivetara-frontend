@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Landing from "./pages/Landing";
 import Nav from "./components/Nav";
 import Today from "./pages/Today";
 import Jobs from "./pages/Jobs";
@@ -17,6 +18,10 @@ export default function App() {
         <Admin />
       </main>
     );
+  }
+
+  if (window.location.pathname === "/" || window.location.pathname === "/landing") {
+    return <Landing />;
   }
 
   const pages = {
