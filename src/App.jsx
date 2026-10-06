@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Landing from "./pages/Landing";
 import Nav from "./components/Nav";
 import Today from "./pages/Today";
 import Jobs from "./pages/Jobs";
@@ -19,6 +20,8 @@ export default function App() {
     );
   }
 
+  if (window.location.pathname === "/" || window.location.pathname === "/landing") return <Landing />;
+
   const pages = {
     today: <Today />,
     jobs: <Jobs />,
@@ -37,3 +40,4 @@ export default function App() {
     </>
   );
 }
+
