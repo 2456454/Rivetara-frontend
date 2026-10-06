@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Landing from "./pages/Landing";
+import AuthGate from "./components/AuthGate";
 import Nav from "./components/Nav";
 import Today from "./pages/Today";
 import Jobs from "./pages/Jobs";
@@ -15,7 +16,7 @@ export default function App() {
   if (admin) {
     return (
       <main className="shell">
-        <Admin />
+        <AuthGate><Admin /></AuthGate>
       </main>
     );
   }
@@ -33,12 +34,12 @@ export default function App() {
   };
 
   return (
-    <>
+    <AuthGate>
       <main className="shell">
         {pages[p] || <Today />}
       </main>
 
       <Nav p={p} set={setP} />
-    </>
+    </AuthGate>
   );
 }
