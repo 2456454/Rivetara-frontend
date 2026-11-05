@@ -1,11 +1,28 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Sparkles, Square } from "lucide-react";
-import { ai } from "../lib/api";
+import { ai, consents } from "../lib/api";
 
 export default function AI({ done }) {
  const [on, setOn] = useState(false);
  const [busy, setBusy] = useState(false);
+ const [message, setMessage] = useState("");
+ const [text, setText] = useState("");
  const rec = useRef(null);
+ useEffect(() => () => { rec.current?.abort(); window.speechSynthesis?.cancel(); }, []);
+
+ async function permitted(microphone = false) {
+   try {
+     const choices = await consents();
+     if (!choices.ai || (microphone && !choices.microphone)) {
+       setMessage("Open Settings → Privacy Centre to allow AI processing" + (microphone ? " and microphone use." : "."));
+       return false;
+     }
+     return true;
+   } catch {
+     setMessage("Cannot check permissions. No request was sent. Please try again when connected.");
+     return false;
+   }
+ }
 
  function speak(text) {
    if ("speechSynthesis" in window) {
@@ -18,15 +35,18 @@ export default function AI({ done }) {
 
  async function run(q) {
    setBusy(true);
+   setMessage("Processing your request…");
 
    try {
+     if (!(await permitted())) return;
      const r = await ai(q);
 
      if (!r) {
        throw new Error("No response from Rivetara backend");
      }
 
-     const reply = r.reply || "Request completed.";
+     const reply = r.reply || "No result was confirmed. Please review your records.";
+     setMessage(reply);
 
      speak(reply);
 
@@ -34,14 +54,14 @@ export default function AI({ done }) {
        done(reply);
      }
    } catch (error) {
-     console.error("Rivetara AI error:", error);
+     setMessage("Request failed. No result was confirmed. Check your records before retrying.");
      speak("I couldn't complete that.");
    } finally {
      setBusy(false);
    }
  }
 
- function tap() {
+ async function tap() {
    if (on) {
      if (rec.current) {
        rec.current.stop();
@@ -51,16 +71,16 @@ export default function AI({ done }) {
      return;
    }
 
+   setBusy(true);
+   const allowed = await permitted(true);
+   setBusy(false);
+   if (!allowed) return;
+
    const SpeechRecognition =
      window.SpeechRecognition || window.webkitSpeechRecognition;
 
    if (!SpeechRecognition) {
-     const q = window.prompt("Tell Rivetara what you need");
-
-     if (q) {
-       run(q);
-     }
-
+     setMessage("Voice input is unavailable in this browser. Type your request below.");
      return;
    }
 
@@ -79,19 +99,26 @@ export default function AI({ done }) {
    };
 
    recognition.onerror = (event) => {
-     console.error("Speech recognition error:", event);
+     setMessage("Voice capture stopped. You can type your request instead.");
      setOn(false);
    };
 
-   recognition.start();
-   setOn(true);
+   try {
+     recognition.start();
+     setOn(true);
+   } catch {
+     setMessage("Microphone could not start. You can type your request instead.");
+   }
  }
 
  return (
+   <section aria-label="Rivetara AI">
    <div className="ai">
      <button
        className={on ? "listen" : ""}
        onClick={tap}
+       aria-label={on ? "Stop listening" : "Start listening"}
+       aria-pressed={on}
        disabled={busy}>
 
        {on ? <Square /> : <Sparkles />}
@@ -109,5 +136,13 @@ export default function AI({ done }) {
        </small>
      </div>
    </div>
+   <form onSubmit={event => { event.preventDefault(); if (text.trim()) run(text.trim()); }}>
+     <label htmlFor="ai-request">Or type your request</label>
+     <textarea id="ai-request" value={text} maxLength={10000}
+       onChange={event => setText(event.target.value)} disabled={busy || on} />
+     <button type="submit" disabled={busy || on || !text.trim()}>Send request</button>
+   </form>
+   <p role="status" aria-live="polite">{on ? "Microphone listening. Tap again to stop." : message}</p>
+   </section>
  );
 }
