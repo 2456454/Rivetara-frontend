@@ -115,3 +115,60 @@ Provider responses were mocked for UI tests; real microphone hardware and voice
 quality still require device testing. Signup tests exercise provider success,
 validation, disabled configuration, generic failures and throttling without
 creating real accounts.
+
+## Live agent handoff and automatic voice-note submission
+
+The exact user-supplied Live agent JSON is stored in `config/live-session.json`.
+The server sends `{session, transport:{type:"webrtc",sdp}}` to
+`https://api.openai.com/v1/live/sessions` using the server's project-scoped
+`OPENAI_API_KEY`. It returns only `session.id` and `transport.sdp`. The browser
+cannot override the handoff. Nothing is added to its session configuration.
+No startup configuration is resent on the data channel.
+
+`/api/live/status` reports whether a server key is present. `LIVE_ENABLED=false`
+disables the feature. A key being present is not proof the project has access to
+`gpt-live-1`, the specified voice, the delegation model or the Live endpoint.
+Provider authorization errors are shown as failures rather than substituting a
+model, voice, endpoint or configuration. Keep keys in backend Railway variables.
+
+The browser negotiates WebRTC, plays remote audio, and uses `oai-events`. Capture
+tracks are disabled until `session.started`. Input/output transcript delta strings
+are preserved without trimming, rewritten punctuation or turn-based regrouping;
+overlapping/adjacent start_ms/end_ms intervals of the same kind are accumulated.
+The supplied session ID is opaque. AI-generated voice is disclosed in the UI.
+On End conversation, input tracks stop immediately, but the data channel, peer
+and remote audio remain alive after `session.close` until `session.closed`.
+Late transcript deltas are retained. Startup timeout, close timeout, provider
+error and transport disconnect are reported as incomplete finalization. Navigation
+requests the same close sequence; browser/tab termination cannot guarantee its
+completion.
+
+The consent wording/version has changed to disclose direct microphone audio,
+spoken replies and delegated OpenAI web search. Existing permissions must be
+granted again. The exact handoff includes web_search only: the Live agent is not
+connected to the business-record mutation tools, and the interface states that
+limit. Do not claim Live changed an invoice/job. Existing quick-note/typed requests
+still use the validated action pipeline. Production verified account auth remains
+a prerequisite before opening these prototype APIs to real users; rate limits in
+this change are process-local and do not replace authentication or distributed
+abuse controls.
+
+Quick voice notes now stop automatically about 900 ms after the browser's
+speech-end event (1600 ms after the latest transcript update as a fallback).
+Resumed speech resets the timer. Tap-to-stop remains available; each capture
+submits at most once, empty captures do not call the action pipeline, and
+navigation clears timers and cancels capture. These pauses are browser heuristics,
+not semantic certainty; retain the typed correction path and test real microphones
+on supported devices before field use.
+
+The welcome page now uses a calm slate-and-amber design and practical trade
+examples rather than an animated futuristic AI showcase. Example jobs are labelled
+illustrative and are never inserted into business records.
+
+Validation: 14 backend tests, 12 frontend tests (`npm test` in each repo), frontend
+production build, desktop/mobile Chromium checks, and a separate mocked Live
+WebRTC UI check. Tests verify exact handoff preservation, server authentication,
+consent, limits, exact delta whitespace, timed grouping, startup gating, close
+acknowledgement, late deltas, incomplete finalization, pause/resumption and
+cancellation. No real Live audio session or custom voice entitlement was verified:
+this workspace has no OpenAI project key configured.

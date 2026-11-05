@@ -3,3 +3,7 @@ export const consents = () => api('/api/privacy/consents');
 export const setConsent = (purpose, allowed, version) => api('/api/privacy/consents', {
   method: 'PUT', body: JSON.stringify({ purpose, allowed, version })
 });
+export const liveStatus = () => api('/api/live/status');
+export const createLiveSession = (sdp, signal) => api('/api/live/sessions', {
+  method: 'POST', body: JSON.stringify({sdp}), signal
+});

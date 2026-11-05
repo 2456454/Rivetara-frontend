@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Sparkles, Square, Send, Volume2, VolumeX, RotateCcw, Mic } from "lucide-react";
-import { ai, consents } from "../lib/api";
+import { ai, consents, liveStatus } from "../lib/api";
+import LiveVoice from "./LiveVoice";
+import { createVoiceCapture } from "../lib/voiceCapture";
 
 function preferredVoice(voices) {
  const score = voice => (voice.lang.toLowerCase() === 'en-gb' ? 20 : 0) +
@@ -12,6 +14,9 @@ function preferredVoice(voices) {
 
 export default function AI({ done, onSettings }) {
  const [phase, setPhase] = useState('idle');
+ const [mode, setMode] = useState('note');
+ const [liveAvailable, setLiveAvailable] = useState(false);
+ const [liveBusy, setLiveBusy] = useState(false);
  const [reply, setReply] = useState('');
  const [request, setRequest] = useState('');
  const [text, setText] = useState('');
@@ -26,23 +31,19 @@ export default function AI({ done, onSettings }) {
  const locked = useRef(false);
  const mutedRef = useRef(false);
  const abortRequest = useRef(null);
- const busy = ['checking', 'processing', 'starting'].includes(phase);
+ const busy = ['checking', 'processing', 'starting', 'finishing'].includes(phase);
  const listening = phase === 'listening';
 
  useEffect(() => {
    mounted.current = true;
+   liveStatus().then(result => { if (mounted.current) { setLiveAvailable(result.available); if (result.available) setMode('live'); } }).catch(() => {});
    const synth = window.speechSynthesis;
    const update = () => { voice.current = preferredVoice(synth?.getVoices() || []); };
    update(); synth?.addEventListener('voiceschanged', update);
    return () => {
      mounted.current = false;
      abortRequest.current?.abort();
-     if (recognition.current) {
-       recognition.current.onend = null;
-       recognition.current.onresult = null;
-       recognition.current.onerror = null;
-       recognition.current.abort();
-     }
+     recognition.current?.cancel();
      synth?.removeEventListener('voiceschanged', update);
      synth?.cancel();
    };
@@ -115,25 +116,22 @@ export default function AI({ done, onSettings }) {
        setPhase('error'); setReply('Voice input isn’t available in this browser. You can still type your request below.'); return;
      }
      const recorder = new SpeechRecognition();
-     recognition.current = recorder;
-     recorder.lang = 'en-GB'; recorder.continuous = true; recorder.interimResults = true;
-     let words = ''; let failed = false;
-     recorder.onstart = () => { if (mounted.current) setPhase('listening'); };
-     recorder.onresult = event => {
-       words = Array.from(event.results).map(result => result[0].transcript).join(' ');
-       if (mounted.current) { setTranscript(words); setText(words); }
-     };
-     recorder.onerror = () => {
-       failed = true;
-       if (mounted.current) { setPhase('error'); setReply('The microphone stopped. Check your browser permission, or type your request below.'); }
-     };
-     recorder.onend = () => {
-       recognition.current = null;
-       if (!mounted.current || failed) return;
-       if (words.trim()) run(words.trim());
-       else { setPhase('idle'); setReply('I didn’t catch anything. Tap the microphone to try again, or type below.'); }
-     };
-     setTranscript(''); setPhase('starting'); recorder.start();
+     recognition.current = createVoiceCapture(recorder, {
+       onStart() { if (mounted.current) setPhase('listening'); },
+       onStopping() { if (mounted.current) setPhase('finishing'); },
+       onTranscript(words) { if (mounted.current) { setTranscript(words); setText(words); } },
+       onError() {
+         recognition.current = null;
+         if (mounted.current) { setPhase('error'); setReply('The microphone stopped. Check your browser permission, or type your request below.'); }
+       },
+       onEnd(words) {
+         recognition.current = null;
+         if (!mounted.current) return;
+         if (words) run(words);
+         else { setPhase('idle'); setReply('I didn’t catch anything. Tap the microphone to try again, or type below.'); }
+       }
+     });
+     setTranscript(''); setPhase('starting'); recognition.current.start();
    } catch {
      if (mounted.current) { setPhase('error'); setReply('I couldn’t start listening. Check your connection and microphone permission, or type below.'); }
    } finally { locked.current = false; }
@@ -144,14 +142,19 @@ export default function AI({ done, onSettings }) {
    if (mutedRef.current) { window.speechSynthesis?.cancel(); setSpeaking(false); }
  }
  const stateLabel = listening ? 'Listening to you' : phase === 'processing' ? 'Thinking it through' :
-   phase === 'checking' ? 'Checking permissions' : phase === 'starting' ? 'Opening microphone' :
+   phase === 'checking' ? 'Checking permissions' : phase === 'starting' ? 'Opening microphone' : phase === 'finishing' ? 'Finishing your note' :
    speaking ? 'Speaking to you' : phase === 'error' ? 'Let’s try that again' : 'Your AI office manager';
  return <section className={`assistant-panel ${listening ? 'is-listening' : ''} ${busy ? 'is-thinking' : ''} ${speaking ? 'is-speaking' : ''}`} aria-label="Rivetara AI">
    <div className="assistant-topline"><span><i aria-hidden="true" /> RIVETARA AI</span>
-     <button className="voice-toggle" onClick={toggleVoice} aria-pressed={muted} aria-label={muted ? 'Turn spoken replies on' : 'Mute spoken replies'}>
+     {mode === 'note' && <button className="voice-toggle" onClick={toggleVoice} aria-pressed={muted} aria-label={muted ? 'Turn spoken replies on' : 'Mute spoken replies'}>
        {muted ? <VolumeX size={18}/> : <Volume2 size={18}/>}<span>{muted ? 'Voice off' : 'Voice on'}</span>
-     </button>
+     </button>}
    </div>
+   <div className="voice-mode-picker" role="group" aria-label="Voice mode">
+     <button aria-pressed={mode === 'live'} disabled={listening || busy} onClick={() => {window.speechSynthesis?.cancel(); setSpeaking(false); setMode('live');}}>Natural conversation</button>
+     <button aria-pressed={mode === 'note'} disabled={liveBusy} onClick={() => setMode('note')}>Quick voice note</button>
+   </div>
+   {mode === 'live' ? <LiveVoice available={liveAvailable} onSettings={onSettings} onBusy={setLiveBusy}/> : <>
    <div className="assistant-stage">
      <div className="orb-wrap"><span className="orb-ring ring-one" aria-hidden="true"/><span className="orb-ring ring-two" aria-hidden="true"/>
        <button className="assistant-orb" onClick={tap} disabled={busy} aria-label={listening ? 'Stop listening and send request' : 'Start listening'} aria-pressed={listening}>
@@ -160,7 +163,7 @@ export default function AI({ done, onSettings }) {
      </div>
      <div className="assistant-intro"><p className="assistant-state" role="status">{stateLabel}</p>
        <h2>{listening ? 'Go on, I’m listening.' : busy ? 'A little less admin, coming up.' : 'What can I take off your hands?'}</h2>
-       <p>{listening ? 'Tap again when you’ve finished.' : 'Tap once to talk. Tap again to send. Or leave me a note below.'}</p>
+       <p>{listening ? 'I’ll send your request after a short pause. You can also tap to finish.' : 'Tap once and tell me what you need. I’ll get started when you finish speaking.'}</p>
      </div>
    </div>
    <div className="assistant-conversation" aria-live="polite" aria-atomic="true">
@@ -180,5 +183,6 @@ export default function AI({ done, onSettings }) {
      </div>
      <small><Mic size={13}/> You’re in control. The microphone only listens when you turn it on.</small>
    </form>
+   </>}
  </section>;
 }
