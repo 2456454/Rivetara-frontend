@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { dashboard } from "../lib/api";
 import AI from "../components/AI";
+import BrandMark from "../components/BrandMark";
 
 export default function Today({ navigate }) {
  const [data, setData] = useState(null);
@@ -14,7 +15,7 @@ export default function Today({ navigate }) {
  const hour = new Date().getHours();
  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
  return <>
-   <header className="home-header"><div><p className="eye">YOUR DAY, A LITTLE LIGHTER</p><h1>{greeting}.</h1><p className="muted">You do the work. Let’s make the admin easier.</p></div><div className="avatar" aria-hidden="true">R</div></header>
+   <header className="home-header"><div><p className="eye">YOUR DAY, A LITTLE LIGHTER</p><h1>{greeting}.</h1><p className="muted">You do the work. Let’s make the admin easier.</p></div><BrandMark className="home-brand"/></header>
    <AI done={load} onSettings={() => navigate?.('settings')}/>
    <section className="attention-section" aria-label="Business overview">
      <div className="section-heading"><div><p className="eye">AT A GLANCE</p><h2>A little clarity for your day.</h2></div><span>Live business records</span></div>

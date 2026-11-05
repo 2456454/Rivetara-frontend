@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Sparkles, Mic, ClipboardCheck, ShieldCheck, ArrowLeft, Check, LoaderCircle } from 'lucide-react';
 import { api } from '../lib/api';
+import BrandMark from '../components/BrandMark';
 
 export default function Welcome({ onExplore }) {
  const [signup, setSignup] = useState(false);
@@ -25,11 +26,11 @@ export default function Welcome({ onExplore }) {
    } finally { setBusy(false); }
  }
  return <div className="welcome-page">
-   <header className="welcome-nav"><a href="#" className="wordmark" onClick={event => {event.preventDefault(); setSignup(false);}}><span><Sparkles size={21}/></span>rivetara<span className="brand-dot">.</span></a><button className="welcome-login" onClick={onExplore}>Explore the demo <ArrowUp/></button></header>
+   <header className="welcome-nav"><a href="#" className="wordmark" onClick={event => {event.preventDefault(); setSignup(false);}}><BrandMark/>rivetara<span className="brand-dot">.</span></a><button className="welcome-login" onClick={onExplore}>Explore the demo <ArrowUp/></button></header>
    <main className="welcome-main">
      {signup ? <section className="signup-layout">
        <div className="signup-intro"><button className="back-link" onClick={() => setSignup(false)}><ArrowLeft size={16}/> Back to welcome</button><p className="welcome-eyebrow">LESS ADMIN. MORE LIFE.</p><h1>A little help.<br/>A lot off your mind.</h1><p>Make room for the work you love. Your AI office manager starts here.</p><div className="signup-trust"><ShieldCheck size={20}/><span>Your business stays yours. Optional AI and microphone permissions start off.</span></div></div>
-       <div className="signup-card"><span className="signup-mark"><Sparkles size={25}/></span><h2>{sent ? 'Check your email' : 'Let’s get you started.'}</h2><p>{sent ? 'One step closer to less admin.' : 'Create your Rivetara account.'}</p>
+       <div className="signup-card"><BrandMark className="signup-mark"/><h2>{sent ? 'Check your email' : 'Let’s get you started.'}</h2><p>{sent ? 'One step closer to less admin.' : 'Create your Rivetara account.'}</p>
          {!sent && <form onSubmit={submit}><fieldset disabled={!available || busy}><label htmlFor="signup-name">Your name</label><input id="signup-name" name="name" autoComplete="name" required maxLength={100} placeholder="Alex Taylor" disabled={busy}/><label htmlFor="signup-email">Email address</label><input id="signup-email" name="email" type="email" autoComplete="email" required maxLength={254} placeholder="you@yourbusiness.co.uk" disabled={busy}/><label htmlFor="signup-password">Create a password</label><input id="signup-password" name="password" type="password" autoComplete="new-password" minLength={12} maxLength={128} required placeholder="At least 12 characters" disabled={busy}/><small>No payment details needed to request an account. A subscription or trial is not started here.</small><button className="primary-cta" disabled={busy} type="submit">{busy ? <><LoaderCircle size={18}/> Creating account…</> : <>Create account <ArrowRight size={18}/></>}</button></fieldset></form>}
          {!available && !sent && <p className="signup-message">Account creation isn’t open yet. Explore the demo below while we get things ready.</p>}
          {message && <p className="signup-message" role="status">{message}</p>}
