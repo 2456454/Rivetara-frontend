@@ -82,3 +82,36 @@ validation. Both projects use existing Node/npm workflows.
 
 This baseline is an incremental implementation, not a completed MVP, a native
 application, a production security assessment or an App Store approval claim.
+
+## Welcome, voice and account-entry update
+
+The frontend now opens on a responsive welcome page with an illustrative AI
+conversation, UK pricing, account-entry screen and explicitly labelled demo.
+The home workspace puts an animated AI control before the business overview.
+Replies and the user's transcript stay in that panel; duplicate bottom-of-page
+replies are removed. Device speech selects an available English voice, preferring
+UK/natural variants, with a slower rate, mute and replay. This is browser speech,
+not a new cloud voice service; quality depends on installed voices. Reduced-motion
+preferences disable visual animation. Browser recognition submits the assembled
+transcript once when listening stops, supports interim captions and aborts on
+navigation. Typed input remains available.
+
+Account creation is intentionally off by default. `/api/auth/status` reports
+availability without exposing credentials. `/api/auth/signup` uses a separate
+Supabase authentication client, validates input, limits attempts and returns no
+sessions or account identifiers. To connect account provisioning later, configure
+`SUPABASE_URL`, the project's public `SUPABASE_ANON_KEY` and `SIGNUP_ENABLED=true`
+in the backend deployment. Configure Supabase confirmation email delivery and
+confirmation redirect destinations first. Do not use a service-role key for this
+public authentication client. Do not enable public account creation before the
+privacy notice, terms, verified login/session integration and security gates
+above are completed. The demo remains separate from account provisioning;
+creating an account does not authenticate access to the prototype API.
+
+Validation for this update: nine backend tests; production frontend build;
+Chromium desktop/mobile checks for welcome, disabled signup, demo navigation,
+consent navigation, inline AI draft replies, mute and horizontal overflow.
+Provider responses were mocked for UI tests; real microphone hardware and voice
+quality still require device testing. Signup tests exercise provider success,
+validation, disabled configuration, generic failures and throttling without
+creating real accounts.

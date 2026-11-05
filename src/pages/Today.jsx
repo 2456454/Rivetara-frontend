@@ -1,1 +1,26 @@
-import React,{useEffect,useState}from"react";import{dashboard}from"../lib/api";import AI from"../components/AI";export default function Today(){let[d,setD]=useState({jobs:0,quotes:0,unpaidInvoices:0,overdueInvoices:0,completedNotInvoiced:0}),[m,setM]=useState("");let load=()=>dashboard().then(x=>x&&setD(x)).catch(()=>{});useEffect(()=>{load()},[]);return <><header><div><p className="eye">RIVETARA</p><h1>Good evening.</h1><p className="muted">Your business, without the admin pile-up.</p></div><div className="avatar">R</div></header><section className="brief"><div><span>Today</span><h2>Everything that needs your attention.</h2></div><button>10-second private check</button></section><div className="stats">{[["Jobs",d.jobs],["Unpaid",d.unpaidInvoices],["Overdue",d.overdueInvoices],["Quotes",d.quotes]].map(x=><article><b>{x[1]}</b><span>{x[0]}</span></article>)}</div><div className="card"><h3>Daily summary</h3><p><b>{d.overdueInvoices}</b> overdue invoices · <b>{d.completedNotInvoiced}</b> completed jobs not invoiced · <b>{d.quotes}</b> quotes.</p><p className="muted">Would you like me to deal with these?</p></div><AI done={x=>{setM(x);load()}}/>{m&&<p className="centre muted">{m}</p>}</>}
+import React, { useEffect, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { dashboard } from "../lib/api";
+import AI from "../components/AI";
+
+export default function Today({ navigate }) {
+ const [data, setData] = useState(null);
+ const [error, setError] = useState(false);
+ async function load() {
+   try { setData(await dashboard()); setError(false); }
+   catch { setError(true); }
+ }
+ useEffect(() => { load(); }, []);
+ const hour = new Date().getHours();
+ const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+ return <>
+   <header className="home-header"><div><p className="eye">YOUR DAY, A LITTLE LIGHTER</p><h1>{greeting}.</h1><p className="muted">You do the work. Let’s make the admin easier.</p></div><div className="avatar" aria-hidden="true">R</div></header>
+   <AI done={load} onSettings={() => navigate?.('settings')}/>
+   <section className="attention-section" aria-label="Business overview">
+     <div className="section-heading"><div><p className="eye">AT A GLANCE</p><h2>A little clarity for your day.</h2></div><span>Live business records</span></div>
+     {error && <p role="alert" className="load-error">We couldn’t load your business overview. <button onClick={load}>Try again</button></p>}
+     <div className="stats">{[['Jobs',data?.jobs,'jobs'],['Unpaid invoices',data?.unpaidInvoices,'money'],['Overdue invoices',data?.overdueInvoices,'money'],['Quotes',data?.quotes,'money']].map(([label,count,page]) => <button className="stat-card" key={label} onClick={() => navigate?.(page)}><span>{label}<ArrowUpRight size={17}/></span><b>{count ?? '—'}</b><small>View records</small></button>)}</div>
+     {data && <div className="day-note"><span className="note-icon" aria-hidden="true">✦</span><div><h3>{data.overdueInvoices || data.completedNotInvoiced ? 'A couple of things to keep an eye on.' : 'A clear view of where things stand.'}</h3><p>{data.overdueInvoices} overdue invoices · {data.completedNotInvoiced} completed jobs not invoiced · {data.quotes} quotes.</p></div></div>}
+   </section>
+ </>;
+}
