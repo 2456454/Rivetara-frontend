@@ -12,7 +12,7 @@ import Welcome from './pages/Welcome';
 function Workspace() {
   const [experience, setExperience] = useState('trade');
   const [page, setPage] = useState('today');
-  const pages = {today: <Today navigate={setPage}/>, jobs: <Jobs/>, customers: <Customers/>, money: <Money/>, settings: <Settings/>};
+  const pages = {today: <Today navigate={setPage}/>, jobs: <Jobs navigate={setPage}/>, customers: <Customers/>, money: <Money/>, settings: <Settings/>};
   return <><main className="shell"><div className="experience-switch" role="group" aria-label="Choose your experience"><button aria-pressed={experience==='trade'} onClick={()=>setExperience('trade')}>Run my business</button><button aria-pressed={experience==='mentor'} onClick={()=>setExperience('mentor')}>Build my business</button></div>
     {experience==='mentor'?<Mentor onTrade={()=>setExperience('trade')} onSettings={()=>{setExperience('trade');setPage('settings');}}/>:pages[page]||pages.today}
     </main>{experience==='trade'&&<Nav p={page} set={setPage}/>}</>;
