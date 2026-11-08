@@ -1,15 +1,35 @@
 # Rivetara Frontend
 
-Railway-ready React/Vite frontend for the current Rivetara web build.
+React/Vite workspace with verified Supabase sign-in, selected-business data access,
+customer records and editable AI proposals requiring explicit confirmation.
 
-## Deploy
-1. Upload the contents of this folder to the root of your frontend GitHub repo.
-2. Create/connect that repo as a Railway service.
-3. Set `VITE_API_BASE_URL` to your Rivetara backend Railway domain.
-4. Deploy and generate a Railway frontend domain.
+## Run
 
-Never put the OpenAI API key in this frontend. AI calls go through the backend.
+Use Node 22 and `npm ci`. Set `VITE_API_BASE_URL` to the matching backend, then
+`npm run dev`. Backend public auth configuration supplies the Supabase URL and
+anon key. Never put an OpenAI or service-role key in frontend variables.
 
-Included: Apple-style responsive dashboard; zero-state account; central tap-on/tap-off Rivetara AI with spoken browser confirmation; jobs/history; invoices with Paid/archive flow; customers; Privacy Centre; £19.99 plan; `/admin` manager UI foundation; backend API client; Railway config.
+The matching backend migration and session/membership endpoints must be available.
+Confirmed-email accounts sign in through Supabase; initial business setup creates
+an organisation and owner membership. Sessions stay in memory, refresh while the
+page is open, and end locally on reload or sign-out. Business switching resets
+workspace state. Password recovery and persistent login are future work.
 
-Product requirements such as secure production authentication/MFA, full offline native sync, WhatsApp, Xero, Apple Watch, App Store billing and native notifications require their matching backend/native integrations and are not falsely simulated in this browser-only project.
+Customers support add/edit/archive/restore. Voice notes and typed requests create
+editable proposals with customer selection. Confirm/Cancel are explicit. Returning
+to Today reloads pending proposals; unsaved edits return to the original proposed
+values. Confirmation retries reuse the same proposal ID. The separate Live
+conversation cannot change business records. The public demo uses local examples
+and makes no business-record requests.
+
+## Validate
+
+- `npm test`: capture and voice transport tests.
+- `npm run test:ui`: React UI tests for account access, business switching,
+  sign-out, customer forms and confirmation/cancellation/retry behaviour.
+- `npm run build`: production assets. CI runs all three using `npm ci` on Node 22.
+
+Backend `docs/FOUNDATIONS_RELEASE.md` documents coordinated rollout, schema changes,
+legacy ownership mapping, staging checks and rollback. Production and real
+provider/microphone/email verification are separate release steps. Full invoice
+issuance/accounting, mentor, billing and native integrations remain future work.

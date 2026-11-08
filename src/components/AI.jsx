@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Sparkles, Square, Send, Volume2, VolumeX, RotateCcw, Mic } from "lucide-react";
-import { ai, consents, liveStatus } from "../lib/api";
+import { ai, consents, liveStatus, list } from "../lib/api";
+import ProposalReview from "./ProposalReview";
 import LiveVoice from "./LiveVoice";
 import { createVoiceCapture } from "../lib/voiceCapture";
 
@@ -13,6 +14,8 @@ function preferredVoice(voices) {
 }
 
 export default function AI({ done, onSettings }) {
+ const [reviewsLoaded, setReviewsLoaded] = useState(false);
+ const [proposals, setProposals] = useState([]);
  const [phase, setPhase] = useState('idle');
  const [mode, setMode] = useState('note');
  const [liveAvailable, setLiveAvailable] = useState(false);
@@ -34,9 +37,19 @@ export default function AI({ done, onSettings }) {
  const busy = ['checking', 'processing', 'starting', 'finishing'].includes(phase);
  const listening = phase === 'listening';
 
+ async function loadReviews() {
+   try {
+     const saved = await list('proposals');
+     if (mounted.current) {setProposals(saved); setReviewsLoaded(true);}
+   } catch {
+     if (mounted.current) setReply('Pending reviews could not be loaded. Retry before starting another request.');
+   }
+ }
+
  useEffect(() => {
    mounted.current = true;
-   liveStatus().then(result => { if (mounted.current) { setLiveAvailable(result.available); if (result.available) setMode('live'); } }).catch(() => {});
+   loadReviews();
+   liveStatus().then(result => { if (mounted.current) setLiveAvailable(result.available); }).catch(() => {});
    const synth = window.speechSynthesis;
    const update = () => { voice.current = preferredVoice(synth?.getVoices() || []); };
    update(); synth?.addEventListener('voiceschanged', update);
@@ -77,7 +90,7 @@ export default function AI({ done, onSettings }) {
  }
 
  async function run(q) {
-   if (locked.current || !q.trim()) return;
+   if (locked.current || !reviewsLoaded || proposals.length || !q.trim()) return;
    locked.current = true;
    window.speechSynthesis?.cancel(); setSpeaking(false);
    setRequest(q); setReply(''); setOutcome(''); setPhase('processing');
@@ -89,7 +102,8 @@ export default function AI({ done, onSettings }) {
      if (!mounted.current) return;
      const answer = result?.reply || 'I couldn’t confirm a result. Please check your records before trying again.';
      const actions = result?.actions || [];
-     const status = actions.some(a => a.result?.status === 'needs_review') ? 'Needs your review' :
+     setProposals(actions.filter(a => a.result?.status === 'proposed').map(a => a.result.proposal));
+     const status = actions.some(a => a.result?.status === 'proposed') ? 'Review before saving' : actions.some(a => a.result?.status === 'needs_review') ? 'Needs your review' :
        actions.some(a => a.result?.status === 'drafted') ? 'Draft ready to review' :
        actions.length ? 'Action completed' : 'Rivetara’s reply';
      setOutcome(status); setReply(answer); setPhase('result'); setText('');
@@ -157,13 +171,13 @@ export default function AI({ done, onSettings }) {
    {mode === 'live' ? <LiveVoice available={liveAvailable} onSettings={onSettings} onBusy={setLiveBusy}/> : <>
    <div className="assistant-stage">
      <div className="orb-wrap"><span className="orb-ring ring-one" aria-hidden="true"/><span className="orb-ring ring-two" aria-hidden="true"/>
-       <button className="assistant-orb" onClick={tap} disabled={busy} aria-label={listening ? 'Stop listening and send request' : 'Start listening'} aria-pressed={listening}>
+       <button className="assistant-orb" onClick={tap} disabled={busy || !reviewsLoaded || proposals.length > 0} aria-label={listening ? 'Stop listening and prepare a preview' : 'Start listening'} aria-pressed={listening}>
          <span className="orb-glow" aria-hidden="true"/>{listening ? <Square size={26}/> : <Sparkles size={32}/>}
        </button>
      </div>
      <div className="assistant-intro"><p className="assistant-state" role="status">{stateLabel}</p>
        <h2>{listening ? 'Go on, I’m listening.' : busy ? 'A little less admin, coming up.' : 'What can I take off your hands?'}</h2>
-       <p>{listening ? 'I’ll send your request after a short pause. You can also tap to finish.' : 'Tap once and tell me what you need. I’ll get started when you finish speaking.'}</p>
+       <p>{listening ? 'I’ll send your request after a short pause. You can also tap to finish.' : 'Tap once and tell me what you need. I’ll prepare details for you to review when you finish speaking.'}</p>
      </div>
    </div>
    <div className="assistant-conversation" aria-live="polite" aria-atomic="true">
@@ -176,10 +190,14 @@ export default function AI({ done, onSettings }) {
        </div>}
      </>}
    </div>
+   {!reviewsLoaded && <button className="assistant-secondary" onClick={loadReviews}>Reload pending reviews</button>}
+   {proposals.map(proposal => <ProposalReview key={proposal.id} proposal={proposal} onFinished={(id, message) => {
+     setProposals(previous => previous.filter(p => p.id !== id)); setReply(message); setOutcome('Your decision recorded'); done?.();
+   }}/>)}
    <form className="assistant-composer" onSubmit={event => { event.preventDefault(); run(text.trim()); }}>
      <label htmlFor="ai-request">Or type your request</label>
-     <div className="composer-field"><textarea id="ai-request" value={text} maxLength={10000} rows={2} placeholder="e.g. Draft a £150 quote for the kitchen repair" onChange={event => setText(event.target.value)} disabled={busy || listening}/>
-       <button type="submit" disabled={busy || listening || !text.trim()} aria-label="Send your request"><Send size={19}/></button>
+     <div className="composer-field"><textarea id="ai-request" value={text} maxLength={10000} rows={2} placeholder="e.g. Draft a £150 quote for the kitchen repair" onChange={event => setText(event.target.value)} disabled={busy || listening || !reviewsLoaded || proposals.length > 0}/>
+       <button type="submit" disabled={busy || listening || !reviewsLoaded || proposals.length > 0 || !text.trim()} aria-label="Send your request"><Send size={19}/></button>
      </div>
      <small><Mic size={13}/> You’re in control. The microphone only listens when you turn it on.</small>
    </form>

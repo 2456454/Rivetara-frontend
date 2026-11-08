@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { list } from "../lib/api";
 
 export default function Jobs() {
+ const [error, setError] = useState(false);
  const [jobs, setJobs] = useState([]);
 
  useEffect(() => {
@@ -15,7 +16,7 @@ export default function Jobs() {
          setJobs(Array.isArray(data) ? data : []);
        }
      } catch (error) {
-       console.error("Failed to load jobs:", error);
+       setError(true);
 
        if (active) {
          setJobs([]);
@@ -34,7 +35,7 @@ export default function Jobs() {
    <div>
      <h1>Jobs</h1>
 
-     {jobs.length === 0 ? (
+     {error ? <p role="alert">Jobs could not be loaded. Please return to this page to retry.</p> : jobs.length === 0 ? (
        <div className="card">
          <h3>No jobs yet</h3>
          <p>Tell Rivetara when the first one comes in.</p>
@@ -43,7 +44,7 @@ export default function Jobs() {
        jobs.map((job, index) => (
          <div className="card" key={job?.id || index}>
            <b>{job?.customer_name || "Customer"}</b>
-           <small>{job?.status || ""}</small>
+           <p>{job.title}</p><p>{job.description}</p><small>{job.scheduled_for ? new Date(job.scheduled_for).toLocaleString() + " · " : ""}{job?.status || ""}</small>
          </div>
        ))
      )}

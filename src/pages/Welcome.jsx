@@ -3,7 +3,7 @@ import { ArrowRight, Mic, ClipboardCheck, ShieldCheck, ArrowLeft, Check, LoaderC
 import { api } from '../lib/api';
 import BrandMark from '../components/BrandMark';
 
-export default function Welcome({ onExplore }) {
+export default function Welcome({ onExplore, onSignIn }) {
  const [signup, setSignup] = useState(false);
  const [busy, setBusy] = useState(false);
  const [message, setMessage] = useState('');
@@ -26,7 +26,7 @@ export default function Welcome({ onExplore }) {
    } finally { setBusy(false); }
  }
  return <div className="welcome-page">
-   <header className="welcome-nav"><a href="#" className="wordmark" onClick={event => {event.preventDefault(); setSignup(false);}}><BrandMark/>rivetara<span className="brand-dot">.</span></a><button className="welcome-login" onClick={onExplore}>Explore the demo <ArrowUp/></button></header>
+   <header className="welcome-nav"><a href="#" className="wordmark" onClick={event => {event.preventDefault(); setSignup(false);}}><BrandMark/>rivetara<span className="brand-dot">.</span></a><button className="welcome-login" onClick={onSignIn}>Sign in <ArrowUp/></button></header>
    <main className="welcome-main">
      {signup ? <section className="signup-layout">
        <div className="signup-intro"><button className="back-link" onClick={() => setSignup(false)}><ArrowLeft size={16}/> Back to welcome</button><p className="welcome-eyebrow">LESS ADMIN. MORE LIFE.</p><h1>A little help.<br/>A lot off your mind.</h1><p>Make room for the work you love. A simpler way to keep your jobs and paperwork in order.</p><div className="signup-trust"><ShieldCheck size={20}/><span>Your business stays yours. Optional AI and microphone permissions start off.</span></div></div>
@@ -34,7 +34,7 @@ export default function Welcome({ onExplore }) {
          {!sent && <form onSubmit={submit}><fieldset disabled={!available || busy}><label htmlFor="signup-name">Your name</label><input id="signup-name" name="name" autoComplete="name" required maxLength={100} placeholder="Alex Taylor" disabled={busy}/><label htmlFor="signup-email">Email address</label><input id="signup-email" name="email" type="email" autoComplete="email" required maxLength={254} placeholder="you@yourbusiness.co.uk" disabled={busy}/><label htmlFor="signup-password">Create a password</label><input id="signup-password" name="password" type="password" autoComplete="new-password" minLength={12} maxLength={128} required placeholder="At least 12 characters" disabled={busy}/><small>No payment details needed to request an account. A subscription or trial is not started here.</small><button className="primary-cta" disabled={busy} type="submit">{busy ? <><LoaderCircle size={18}/> Creating account…</> : <>Create account <ArrowRight size={18}/></>}</button></fieldset></form>}
          {!available && !sent && <p className="signup-message">Account creation isn’t open yet. Explore the demo below while we get things ready.</p>}
          {message && <p className="signup-message" role="status">{message}</p>}
-         <button className="demo-link" onClick={onExplore}>Just looking? Explore the demo</button>
+         <button className="demo-link" onClick={onSignIn}>Already have an account? Sign in</button><button className="demo-link" onClick={onExplore}>Just looking? Explore the demo</button>
        </div>
      </section> : <>
        <section className="welcome-hero"><div className="welcome-copy"><p className="welcome-eyebrow"><span/> BUILT FOR THE TOOLS. NOT MORE PAPERWORK.</p><h1>Good at your trade.<br/><span>Fed up with<br/>the admin?</span></h1><p className="hero-description">You’ve got enough to do without another evening of paperwork. Tell Rivetara about the job and keep your jobs, quotes and invoice drafts together. Speak it or type it. Keep it simple.</p><div className="welcome-actions"><button className="primary-cta" onClick={() => setSignup(true)}>Get started <ArrowRight size={19}/></button><button className="secondary-cta" onClick={onExplore}>Take a look around</button></div><p className="hero-footnote">For plumbers, electricians, builders and everyone busy on the tools.</p></div>
