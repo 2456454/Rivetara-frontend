@@ -5,3 +5,18 @@
 .welcome-benefits{border-color:#3a424b;gap:40px}.welcome-benefits article>span{background:#c2b29112;border:1px solid #d1c2a32b;color:#d4bd9b;border-radius:10px}.welcome-benefits h3{color:#eeeFe9;font-size:15px}.welcome-benefits p{font-size:13px;color:#b7c0c9;line-height:1.85;max-width:290px}.welcome-pricing{background:#202830;border-color:#414a54;border-radius:17px;box-shadow:none}.welcome-pricing h2{color:#f0f1e9;font-weight:550}.welcome-pricing p{color:#b5c0ca;font-size:13px}.welcome-pricing .price{color:#e8bf8d;font-weight:550}.price span{color:#b5c0ca}.welcome-pricing small{color:#afb9c4;font-size:11px}.welcome-pricing .welcome-eyebrow{color:#d7b88b;font-size:9px}.welcome-pricing>div:last-child>p:nth-child(2) svg{color:#d0be9e}.welcome-footer{border-top:1px solid #3a424b;color:#a9b3be;font-size:11px}
 .signup-intro h1{color:#f1f3ed}.back-link{color:#c1c7cd}.signup-intro>p:not(.welcome-eyebrow){color:#b5c0c9}.signup-trust{color:#bfccd0}.signup-card{background:#202830;border-color:#414a54;box-shadow:none;border-radius:17px}.welcome-page .signup-mark{width:48px;height:48px;background:none;border:0;border-radius:0}.signup-card h2{color:#eef0e9}.signup-card>p{color:#b5c0ca}.signup-card label{color:#d0d7db}.signup-card input{background:#171e26;color:#f0f3ed;border-color:#4a5562}.signup-card input::placeholder{color:#a5b2c0}.signup-card small{color:#b0bbc7}.signup-card fieldset:disabled{opacity:.8}.signup-card .signup-message{background:#17212a;border:1px solid #43505b;color:#c3d0d8}.demo-link{color:#e0c49e;text-decoration:underline;text-underline-offset:4px}.brand-mark{object-fit:contain}.home-brand{width:46px;height:46px}.welcome-page button:focus-visible,.welcome-page a:focus-visible,.welcome-page input:focus-visible{outline-color:#f2c68d}
 @media(max-width:700px){.welcome-hero{padding-top:35px;padding-bottom:40px;gap:32px}.welcome-copy h1{font-size:40px;letter-spacing:-1.5px}.welcome-page .hero-description{font-size:14px}.welcome-eyebrow{font-size:8px;letter-spacing:1.2px}.trade-preview{padding:20px}.trade-board-heading h2{font-size:19px}.trade-example{gap:9px}.trade-example b{font-size:11px}.trade-task-tag{font-size:8px}.welcome-benefits{gap:25px}.welcome-footer{padding-top:20px}}
+
+.account-bar {max-width: 1100px; margin: 1rem auto; padding: 0 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem;}
+.account-bar label {display: flex; align-items: center; gap: .65rem; min-width: 0;}
+.account-bar select {max-width: min(55vw, 320px);}
+.account-card {max-width: 560px; margin: 2rem auto;}
+.account-card form, .record-form fieldset {display: grid; gap: .85rem;}
+.record-form fieldset {border: 0; padding: 0; margin: 0; min-width: 0;}
+.record-form label {display: grid; gap: .4rem; text-transform: none;}
+.record-form input, .record-form select, .account-card input, .account-bar select {width: 100%; min-height: 44px; border: 1px solid #cbd5e1; border-radius: 10px; padding: .65rem .8rem; background: white; color: #17283a; font: inherit; box-sizing: border-box;}
+.record-form button, .account-card button, .customer-record button, .account-bar button {min-height: 44px; border-radius: 10px; padding: .65rem 1rem; border: 1px solid #bdc7ce; background: #f8fafc; color: #17283a; cursor: pointer;}
+.record-form button[type=submit] {background: #17283a; color: white;}
+.customer-record {padding: 1rem 0; border-bottom: 1px solid #e2e8f0; overflow-wrap: anywhere;}
+.customer-record button + button {margin-left: .5rem;}
+.proposal-review {text-align: left; margin-top: 1rem;}
+.proposal-review button:disabled, button:disabled {cursor: not-allowed; opacity: .55;}
