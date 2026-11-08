@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { dashboard } from "../lib/api";
-import AI from "../components/AI";
+import Chat from "../components/Chat";
 import BrandMark from "../components/BrandMark";
 
 export default function Today({ navigate }) {
@@ -16,7 +16,7 @@ export default function Today({ navigate }) {
  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
  return <>
    <header className="home-header"><div><p className="eye">YOUR DAY, A LITTLE LIGHTER</p><h1>{greeting}.</h1><p className="muted">You do the work. Let’s make the admin easier.</p></div><BrandMark className="home-brand"/></header>
-   <AI done={load} onSettings={() => navigate?.('settings')}/>
+   <Chat onRecordsChange={load} onSettings={() => navigate?.('settings')}/>
    <section className="attention-section" aria-label="Business overview">
      <div className="section-heading"><div><p className="eye">AT A GLANCE</p><h2>A little clarity for your day.</h2></div><span>Live business records</span></div>
      {error && <p role="alert" className="load-error">We couldn’t load your business overview. <button onClick={load}>Try again</button></p>}

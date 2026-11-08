@@ -81,8 +81,8 @@ export default function Account({children, onBack}) {
       <button disabled={!ready || busy}>{busy ? 'Signing in…' : 'Sign in'}</button>
       <p>Confirm your email before signing in. For now, closing or refreshing this page ends the local session.</p>
     </form> : businesses?.length === 0 ? <form onSubmit={createBusiness}>
-      <p>Set up the business that will own your customers and jobs.</p>
-      <label htmlFor="business-name">Business name</label><input id="business-name" name="name" required maxLength={200}/>
+      <p>Give your workspace a name. An idea or project name is fine if you’re just starting out.</p>
+      <label htmlFor="business-name">Workspace or business name</label><input id="business-name" name="name" required maxLength={200}/>
       <button disabled={busy}>{busy ? 'Setting up…' : 'Create business'}</button>
     </form> : <p role="status">Checking business access…</p>}
     {error && <p role="alert">{error}</p>}
