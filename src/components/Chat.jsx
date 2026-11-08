@@ -2,6 +2,7 @@ import React,{useEffect,useRef,useState} from 'react';
 import {MessageCircle,Mic,Square,Send} from 'lucide-react';
 import {api,consents} from '../lib/api';
 import {createVoiceCapture} from '../lib/voiceCapture';
+import LiveConversation from './LiveConversation';
 import WorkDraft from './WorkDraft';
 export default function Chat({experience='trade',onSettings,onRecordsChange}) {
  const [session,setSession]=useState(()=>crypto.randomUUID());
@@ -11,6 +12,7 @@ export default function Chat({experience='trade',onSettings,onRecordsChange}) {
  const [selected,setSelected]=useState(null);
  const [loading,setLoading]=useState(true);
  const [busy,setBusy]=useState(false);
+ const [liveBusy,setLiveBusy]=useState(false);
  const [listening,setListening]=useState(false);
  const [message,setMessage]=useState('');
  const [retry,setRetry]=useState(null);
@@ -24,7 +26,7 @@ export default function Chat({experience='trade',onSettings,onRecordsChange}) {
  }
  useEffect(()=>{mounted.current=true;load();return()=>{mounted.current=false;capture.current?.cancel();};},[experience]);
  async function send(value,retryRequest) {
-  if(lock.current||!value.trim())return;lock.current=true;setBusy(true);setMessage('');
+  if(lock.current||liveBusy||!value.trim())return;lock.current=true;setBusy(true);setMessage('');
   const request=retryRequest||{session_id:session,request_id:crypto.randomUUID(),message:value.trim(),experience,selected_draft_id:selected?.id||null};
   setTurns(previous=>[...previous.filter(t=>t.id!==request.request_id),{id:request.request_id,message:request.message,reply:'',state:'processing'}]);
   try {
@@ -39,7 +41,7 @@ export default function Chat({experience='trade',onSettings,onRecordsChange}) {
  }
  async function voice() {
   if(listening){capture.current?.stop();return;}
-  if(busy||lock.current)return;
+  if(busy||liveBusy||lock.current)return;
   try {
    const permissions=await consents();
    if(!permissions.ai||!permissions.microphone){setMessage('Allow AI processing and microphone access in the Privacy Centre first.');return;}
@@ -69,8 +71,8 @@ export default function Chat({experience='trade',onSettings,onRecordsChange}) {
    {selected&&<p className="selected-draft">Continuing {selected.kind} draft{selected.data.customer_name?' for '+selected.data.customer_name:''}. <button onClick={()=>setSelected(null)}>Stop focusing on this draft</button></p>}
    <form className="chat-composer" onSubmit={event=>{event.preventDefault();send(text);}}>
     <label htmlFor={'chat-message-'+experience}>Message Rivetara{experience==='mentor'?' Mentor':''}</label>
-    <textarea id={'chat-message-'+experience} rows={3} value={text} maxLength={10000} disabled={busy} onChange={event=>setText(event.target.value)} placeholder={experience==='mentor'?'I’m employed and want to try gardening at weekends…':'Invoice John for the tap repair. I’ll add the price later…'}/>
-    <div className="chat-actions"><button type="button" onClick={voice} disabled={busy} aria-pressed={listening}>{listening?<Square size={17}/>:<Mic size={17}/>} {listening?'Stop recording':'Voice note'}</button><button type="submit" disabled={busy||listening||!text.trim()}><Send size={17}/>{busy?'Working…':'Send message'}</button></div>
+    <textarea id={'chat-message-'+experience} rows={3} value={text} maxLength={10000} disabled={busy||liveBusy} onChange={event=>setText(event.target.value)} placeholder={experience==='mentor'?'I’m employed and want to try gardening at weekends…':'Invoice John for the tap repair. I’ll add the price later…'}/>
+    <div className="chat-actions"><button type="button" onClick={voice} disabled={busy||liveBusy} aria-pressed={listening}>{listening?<Square size={17}/>:<Mic size={17}/>} {listening?'Stop recording':'Voice note'}</button><button type="submit" disabled={busy||liveBusy||listening||!text.trim()}><Send size={17}/>{busy?'Working…':'Send message'}</button></div>
    </form>
   </>}
   {message&&<p role="status">{message}</p>}
@@ -78,5 +80,6 @@ export default function Chat({experience='trade',onSettings,onRecordsChange}) {
   {experience==='trade'&&<section className="working-drafts" aria-label="Saved working drafts"><div className="section-heading"><div><h3>Your working drafts</h3><p>They stay here while you carry on chatting.</p></div><div><button disabled={busy} onClick={()=>startDraft('customer')}>New customer note</button><button disabled={busy} onClick={()=>startDraft('invoice')}>New invoice note</button></div></div>
    {drafts.map(draft=><WorkDraft key={draft.id} draft={draft} onContinue={setSelected} onChanged={row=>{setDrafts(previous=>previous.map(d=>d.id===row.id?row:d));if(selected?.id===row.id)setSelected(row);}} onCreated={id=>{setDrafts(previous=>previous.filter(d=>d.id!==id));if(selected?.id===id)setSelected(null);onRecordsChange?.();}}/>)}
   </section>}
+  <LiveConversation onSettings={onSettings} onBusy={setLiveBusy} disabled={busy||listening}/>
  </section>;
 }
