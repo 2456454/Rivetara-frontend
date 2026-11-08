@@ -20,3 +20,75 @@
 .customer-record button + button {margin-left: .5rem;}
 .proposal-review {text-align: left; margin-top: 1rem;}
 .proposal-review button:disabled, button:disabled {cursor: not-allowed; opacity: .55;}
+
+/* Working chat and the business-building workspace. */
+.experience-switch {display:flex;gap:.4rem;padding:.4rem;background:#e8edf0;border-radius:14px;margin:1.25rem 0 2rem;}
+.experience-switch button {flex:1;padding:.85rem .6rem;border:0;border-radius:10px;background:transparent;font:inherit;font-weight:700;color:#526273;cursor:pointer;}
+.experience-switch button[aria-pressed=true] {background:#fff;color:#17283a;box-shadow:0 2px 7px #17283a12;}
+.chat-panel {background:#fff;border:1px solid #dbe3e8;border-radius:22px;padding:clamp(1rem,3vw,2rem);margin:1rem 0 2rem;}
+.chat-heading,.draft-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
+.chat-heading h2 {display:flex;align-items:center;gap:.6rem;margin:.6rem 0;}
+.chat-heading p,.chat-start p,.work-draft>p {color:#62717f;line-height:1.65;}
+.chat-panel .eyebrow,.mentor-page .eyebrow {font-size:.72rem;letter-spacing:.13em;font-weight:800;color:#7b561d;display:flex;gap:.5rem;align-items:center;}
+.draft-tag {display:inline-block;background:#fff3da;border:1px solid #f2dfb5;color:#74521d;border-radius:20px;padding:.4rem .7rem;white-space:nowrap;font-size:.74rem;font-weight:700;}
+.chat-start {padding:1.4rem 0;}
+.chat-suggestions,.chat-small-actions,.chat-actions,.draft-actions,.mentor-tabs {display:flex;gap:.65rem;flex-wrap:wrap;}
+.chat-panel button,.mentor-page button,.invoice-row button {min-height:42px;padding:.65rem .9rem;border:1px solid #cdd7de;border-radius:10px;background:#f7f9fa;color:#203448;font:inherit;cursor:pointer;}
+.chat-panel button[type=submit],.mentor-tabs button[aria-pressed=true] {background:#203448;color:#fff;border-color:#203448;}
+.chat-history {max-height:560px;overflow:auto;overscroll-behavior:contain;margin:1rem 0;padding:.2rem;}
+.chat-turn {display:grid;gap:.75rem;margin:1.1rem 0;}
+.chat-bubble {max-width:92%;border-radius:16px;padding:.9rem 1.05rem;overflow-wrap:anywhere;line-height:1.6;}
+.chat-bubble span {font-size:.72rem;font-weight:800;letter-spacing:.06em;}
+.chat-bubble p {white-space:pre-wrap;margin:.35rem 0 0;}
+.chat-bubble.from-user {justify-self:end;background:#eaf0f3;color:#213448;}
+.chat-bubble.from-assistant {justify-self:start;background:#faf6ed;color:#293847;}
+.chat-pending {color:#697887;font-size:.9rem;}
+.chat-composer {display:grid;gap:.6rem;padding-top:1.1rem;border-top:1px solid #e5e9ed;}
+.chat-composer label {font-weight:700;}
+.chat-composer textarea,.record-form textarea,.mentor-page textarea {width:100%;box-sizing:border-box;resize:vertical;border:1px solid #bfcbd5;border-radius:12px;padding:.8rem;font:inherit;color:#203448;background:#fff;line-height:1.6;}
+.chat-actions {justify-content:space-between;}
+.chat-actions button {display:flex;align-items:center;gap:.5rem;}
+.chat-small-actions {margin-top:1rem;}
+.chat-small-actions button {font-size:.8rem;}
+.selected-draft {padding:.8rem;background:#eaf0f3;border-radius:12px;}
+.working-drafts {margin-top:2rem;border-top:1px solid #e4e9ed;padding-top:1.3rem;}
+.working-drafts .section-heading {align-items:flex-start;gap:1rem;flex-wrap:wrap;}
+.work-draft {box-shadow:none;margin:1rem 0;border:1px solid #dae2e8;}
+.checkbox-label {display:flex!important;align-items:flex-start;grid-template-columns:none;}
+.checkbox-label input {width:18px!important;min-height:18px!important;margin:2px 6px 0 0;}
+.invoice-row {display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1rem 0;border-bottom:1px solid #e4e9ed;}
+.mentor-hero {padding:clamp(1.5rem,4vw,3rem);border-radius:22px;background:#203448;color:#f9f6ef;margin-bottom:1.4rem;}
+.mentor-hero .eyebrow {color:#edc98a;}
+.mentor-hero h1 {font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:-.045em;line-height:1.06;margin:1rem 0;}
+.mentor-hero>p {max-width:630px;line-height:1.8;color:#d1dce4;}
+.mentor-hero-bottom {display:flex;gap:1rem;justify-content:space-between;align-items:center;flex-wrap:wrap;margin:1.4rem 0;}
+.mentor-hero button {display:flex;gap:.5rem;align-items:center;background:#e9c282;border-color:#e9c282;}
+.mentor-hero progress {width:100%;height:8px;accent-color:#e9c282;}
+.mentor-tabs {margin:1rem 0 1.5rem;}
+.mentor-tabs button {display:flex;align-items:center;gap:.5rem;}
+.next-step {border-left:4px solid #d5a45a;}
+.next-step p {line-height:1.7;}
+.next-step button {display:flex;align-items:center;gap:.5rem;}
+.mentor-onboarding summary {cursor:pointer;font-weight:700;padding:.3rem 0;}
+.mentor-onboarding summary span {color:#6d7c89;font-size:.85rem;font-weight:400;margin-left:.6rem;}
+.mentor-onboarding form {margin-top:1.3rem;}
+.profile-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:1rem;}
+.mentor-page label {display:grid;gap:.5rem;}
+.mentor-page input,.mentor-page select {padding:.7rem;border:1px solid #bfccd6;border-radius:9px;min-height:44px;background:#fff;color:#203448;font:inherit;width:100%;box-sizing:border-box;}
+.mentor-workspace {display:grid;grid-template-columns:minmax(200px,300px) minmax(0,1fr);gap:1.4rem;margin-top:1.5rem;align-items:start;}
+.milestone-list {display:grid;gap:.6rem;}
+.milestone-list button {display:flex;text-align:left;align-items:center;gap:.8rem;padding:1rem;}
+.milestone-list button>span {color:#8c6a37;min-width:24px;}
+.milestone-list small {display:block;font-size:.73rem;color:#6e7d89;margin-top:.35rem;}
+.milestone-list button[aria-current=step] {background:#fff6e6;border-color:#d3b273;}
+.milestone-detail h2 {line-height:1.25;}
+.milestone-detail p {line-height:1.8;}
+.milestone-outcome {font-weight:700;}
+.exercise-box {background:#f3f6f7;border-radius:12px;padding:1rem;margin:1.3rem 0;}
+.exercise-box label {font-size:.85rem;font-weight:700;margin-bottom:.6rem;}
+.mentor-links {display:flex;flex-wrap:wrap;gap:.9rem;margin:1rem 0;}
+.mentor-links a {color:#68501f;}
+.price-estimate {font-size:1.2rem;font-weight:750;}
+.mentor-boundary {color:#6d7b86;line-height:1.7;font-size:.84rem;margin:1.5rem 0 3rem;}
+@media(max-width:680px){.chat-heading,.draft-heading,.invoice-row{flex-direction:column;}.chat-bubble{max-width:100%;}.mentor-workspace{grid-template-columns:1fr;}.milestone-list{grid-template-columns:1fr 1fr;}.milestone-list button{padding:.7rem;align-items:flex-start;}.milestone-list b{font-size:.8rem;}.milestone-list small{font-size:.65rem;}.experience-switch button{font-size:.88rem;}}
+.mentor-hero {display:block;}

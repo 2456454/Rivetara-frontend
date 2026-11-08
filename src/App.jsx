@@ -5,13 +5,17 @@ import Today from './pages/Today';
 import Jobs from './pages/Jobs';
 import Customers from './pages/Customers';
 import Money from './pages/Money';
+import Mentor from './pages/Mentor';
 import Settings from './pages/Settings';
 import Welcome from './pages/Welcome';
 
 function Workspace() {
+  const [experience, setExperience] = useState('trade');
   const [page, setPage] = useState('today');
   const pages = {today: <Today navigate={setPage}/>, jobs: <Jobs/>, customers: <Customers/>, money: <Money/>, settings: <Settings/>};
-  return <><main className="shell">{pages[page] || pages.today}</main><Nav p={page} set={setPage}/></>;
+  return <><main className="shell"><div className="experience-switch" role="group" aria-label="Choose your experience"><button aria-pressed={experience==='trade'} onClick={()=>setExperience('trade')}>Run my business</button><button aria-pressed={experience==='mentor'} onClick={()=>setExperience('mentor')}>Build my business</button></div>
+    {experience==='mentor'?<Mentor onTrade={()=>setExperience('trade')} onSettings={()=>{setExperience('trade');setPage('settings');}}/>:pages[page]||pages.today}
+    </main>{experience==='trade'&&<Nav p={page} set={setPage}/>}</>;
 }
 export default function App() {
   const [screen, setScreen] = useState('welcome');
