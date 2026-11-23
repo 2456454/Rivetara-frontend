@@ -135,8 +135,8 @@
 .signin-suggestions.signin-suggestions {
   background: rgba(237, 239, 217, 0.075);
   border: 1px solid rgba(237, 239, 217, 0.21);
-  border-radius: 4px;
-  padding: 19px 23px 16px;
+  border-radius: 12px;
+  padding: 24px 27px 22px;
   backdrop-filter: blur(15px);
   width: 100%;
   min-height: 257px;
@@ -528,7 +528,7 @@
   }
   .signin-suggestions.signin-suggestions {
     min-height: 0;
-    padding: 15px 17px;
+    padding: 20px 21px;
   }
   .signin-suggestions .signin-tip-top {
     margin-bottom: 11px;
@@ -778,7 +778,7 @@
 /* Keep inspiration readable throughout transitions, including over photography. */
 .signin-suggestions.signin-suggestions {
   background: rgba(12, 37, 28, 0.92);
-  border-color: rgba(237, 239, 217, 0.3);
+  border-color: rgba(237, 239, 217, 0.14);
   min-height: 255px;
 }
 .signin-suggestions .signin-tip-copy {
