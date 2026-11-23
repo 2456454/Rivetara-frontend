@@ -33,3 +33,14 @@ Backend `docs/FOUNDATIONS_RELEASE.md` documents coordinated rollout, schema chan
 legacy ownership mapping, staging checks and rollback. Production and real
 provider/microphone/email verification are separate release steps. Full invoice
 issuance/accounting, mentor, billing and native integrations remain future work.
+
+## Marketing welcome and early access
+
+The premium welcome page is integrated in `src/pages/Welcome.jsx` with page-scoped
+styles, locally served licensed fonts, accessible example tabs and a consented
+email form. Sign-in and demo still use the existing app callbacks. Account creation
+retains its existing backend availability gate in `AccountSignup.jsx`.
+
+The email form calls `/api/early-access` through `VITE_API_BASE_URL`. Deploy the
+matching backend endpoint and its early-access database migration before this UI.
+Opt-ins are separate from paid accounts and no marketing emails are sent here.
