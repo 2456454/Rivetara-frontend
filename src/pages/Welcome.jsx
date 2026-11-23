@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { api } from "../lib/api";
 import AccountSignup from "./AccountSignup";
 import IdeaSuggestions from "../components/IdeaSuggestions";
+import BusinessPreview from "../components/BusinessPreview";
 import "./early-access.css";
 import "./fonts.css";
 import "./landing.css";
@@ -157,75 +158,7 @@ export default function Welcome({ onExplore, onSignIn }) {
                 </div>
               </div>
               <div>
-                <div
-                  className="workspace"
-                  aria-label="Illustrative Rivetara business dashboard"
-                >
-                  <div className="windowbar">
-                    <span className="dots">
-                      <i></i>
-                      <i></i>
-                      <i></i>
-                    </span>
-                    <span>YOUR BUSINESS, CONNECTED</span>
-                    <span>R</span>
-                  </div>
-                  <div className="windowbody">
-                    <div className="whead">
-                      <div>
-                        <h3>A clearer day starts here.</h3>
-                        <p>Your work, your plans, your next steps.</p>
-                      </div>
-                      <span className="avatar">JD</span>
-                    </div>
-                    <div className="brief">
-                      <div className="eyebrow">Your daily brief</div>
-                      <p>
-                        <strong>The next steps are ready.</strong>
-                        <br />
-                        Your quote is drafted, this week’s promotion is
-                        prepared, and your expenses are organised for review.
-                      </p>
-                    </div>
-                    <div className="task">
-                      <span className="check">✓</span>
-                      <div>
-                        Quote for the kitchen renovation
-                        <small>Prepared from your job notes</small>
-                      </div>
-                      <span className="tag pending">Review draft</span>
-                    </div>
-                    <div className="task">
-                      <span className="check">✓</span>
-                      <div>
-                        Your next advertising campaign
-                        <small>Copy and creative direction, together</small>
-                      </div>
-                      <span className="tag pending">Review draft</span>
-                    </div>
-                    <div className="task">
-                      <span className="check">✓</span>
-                      <div>
-                        Expenses, ready for your accountant
-                        <small>Receipts and records in one place</small>
-                      </div>
-                      <span className="tag">Organised</span>
-                    </div>
-                    <div className="wfoot">
-                      <span>Working with you, every step</span>
-                      <span>You’re in control ↗</span>
-                    </div>
-                  </div>
-                  <div className="floating">
-                    <span className="seal">✓</span>
-                    <div>
-                      <strong>Less chasing. More building.</strong>
-                      <small>
-                        Your next chapter starts with a clearer day.
-                      </small>
-                    </div>
-                  </div>
-                </div>
+                <BusinessPreview />
                 <p className="example">
                   ILLUSTRATIVE PRODUCT PREVIEW · EXAMPLE CONTENT
                 </p>

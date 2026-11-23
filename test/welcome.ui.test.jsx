@@ -19,9 +19,9 @@ test("premium welcome retains sign-in and demo actions and accessible workflow t
   await user.click(screen.getByRole("button", { name: /Explore the demo/ }));
   expect(onExplore).toHaveBeenCalledOnce();
   await user.click(screen.getByRole("tab", { name: "Sort the numbers" }));
-  expect(screen.getByRole("tabpanel").textContent).toContain(
-    "A clearer picture of your paperwork.",
-  );
+  expect(
+    screen.getByRole("tabpanel", { name: "Sort the numbers" }).textContent,
+  ).toContain("A clearer picture of your paperwork.");
   await user.keyboard("{ArrowRight}");
   expect(
     screen
