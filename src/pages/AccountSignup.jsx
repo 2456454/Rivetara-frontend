@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ArrowRight, ShieldCheck, ArrowLeft, LoaderCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { api } from "../lib/api";
-import BrandMark from "../components/BrandMark";
+import SignInScene from "../components/SignInScene";
 
 export default function AccountSignup({ onExplore, onSignIn, onBack }) {
   const [busy, setBusy] = useState(false);
@@ -44,121 +44,90 @@ export default function AccountSignup({ onExplore, onSignIn, onBack }) {
     }
   }
   return (
-    <div className="welcome-page">
-      <header className="welcome-nav">
-        <button className="wordmark" onClick={onBack}>
-          <BrandMark />
-          rivetara<span className="brand-dot">.</span>
-        </button>
-        <button className="welcome-login" onClick={onSignIn}>
-          Sign in <ArrowRight size={16} />
-        </button>
-      </header>
-      <main className="welcome-main">
-        <section className="signup-layout">
-          <div className="signup-intro">
-            <button className="back-link" onClick={() => onBack()}>
-              <ArrowLeft size={16} /> Back to welcome
-            </button>
-            <p className="welcome-eyebrow">LESS ADMIN. MORE LIFE.</p>
-            <h1>
-              A little help.
-              <br />A lot off your mind.
-            </h1>
-            <p>
-              Make room for the work you love. A simpler way to keep your jobs
-              and paperwork in order.
-            </p>
-            <div className="signup-trust">
-              <ShieldCheck size={20} />
-              <span>
-                Your business stays yours. Optional AI and microphone
-                permissions start off.
-              </span>
+    <SignInScene mode="signup" onBack={onBack}>
+      <div className="signin-form-heading">
+        <span className="signin-eyebrow">START SMALL. THINK BIG.</span>
+        <h1>{sent ? "One step closer." : "Make a start."}</h1>
+        <p>
+          {sent
+            ? "Your next chapter is taking shape. Check your inbox for the next step."
+            : "Your idea doesn’t need to be perfect. Give it a place to grow, one practical step at a time."}
+        </p>
+      </div>
+      {!sent && (
+        <form className="signin-form" onSubmit={submit}>
+          <fieldset
+            className="signin-signup-fields"
+            disabled={!available || busy}
+          >
+            <div className="signin-field">
+              <label htmlFor="signup-name">Your name</label>
+              <input
+                id="signup-name"
+                name="name"
+                autoComplete="name"
+                required
+                maxLength={100}
+                placeholder="Alex Taylor"
+              />
             </div>
-          </div>
-          <div className="signup-card">
-            <BrandMark className="signup-mark" />
-            <h2>{sent ? "Check your email" : "Let’s get you started."}</h2>
-            <p>
-              {sent
-                ? "One step closer to less admin."
-                : "Create your Rivetara account."}
+            <div className="signin-field">
+              <label htmlFor="signup-email">Email address</label>
+              <input
+                id="signup-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                maxLength={254}
+                placeholder="you@yourbusiness.com"
+              />
+            </div>
+            <div className="signin-field">
+              <label htmlFor="signup-password">Create a password</label>
+              <input
+                id="signup-password"
+                name="password"
+                type="password"
+                autoComplete="new-password"
+                required
+                minLength={12}
+                maxLength={128}
+                placeholder="At least 12 characters"
+              />
+            </div>
+            <button className="signin-submit" type="submit" disabled={busy}>
+              {busy ? "Creating account…" : "Create account"}
+              <ArrowRight size={16} />
+            </button>
+            <p className="signin-verified">
+              No payment details. No subscription started here.
             </p>
-            {!sent && (
-              <form onSubmit={submit}>
-                <fieldset disabled={!available || busy}>
-                  <label htmlFor="signup-name">Your name</label>
-                  <input
-                    id="signup-name"
-                    name="name"
-                    autoComplete="name"
-                    required
-                    maxLength={100}
-                    placeholder="Alex Taylor"
-                    disabled={busy}
-                  />
-                  <label htmlFor="signup-email">Email address</label>
-                  <input
-                    id="signup-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    maxLength={254}
-                    placeholder="you@yourbusiness.co.uk"
-                    disabled={busy}
-                  />
-                  <label htmlFor="signup-password">Create a password</label>
-                  <input
-                    id="signup-password"
-                    name="password"
-                    type="password"
-                    autoComplete="new-password"
-                    minLength={12}
-                    maxLength={128}
-                    required
-                    placeholder="At least 12 characters"
-                    disabled={busy}
-                  />
-                  <small>
-                    No payment details needed to request an account. A
-                    subscription or trial is not started here.
-                  </small>
-                  <button className="primary-cta" disabled={busy} type="submit">
-                    {busy ? (
-                      <>
-                        <LoaderCircle size={18} /> Creating account…
-                      </>
-                    ) : (
-                      <>
-                        Create account <ArrowRight size={18} />
-                      </>
-                    )}
-                  </button>
-                </fieldset>
-              </form>
-            )}
-            {!available && !sent && (
-              <p className="signup-message">
-                Account creation isn’t open yet. Explore the demo below while we
-                get things ready.
-              </p>
-            )}
-            {message && (
-              <p className="signup-message" role="status">
-                {message}
-              </p>
-            )}
-            <button className="demo-link" onClick={onSignIn}>
-              Already have an account? Sign in
-            </button>
-            <button className="demo-link" onClick={onExplore}>
-              Just looking? Explore the demo
-            </button>
-          </div>
-        </section>
-      </main>
-    </div>
+          </fieldset>
+        </form>
+      )}
+      {!available && !sent && (
+        <p className="signin-availability" role="status">
+          Account creation isn’t open yet. Explore the demo while we get things
+          ready, or join early access on the welcome page.
+        </p>
+      )}
+      {message && (
+        <p className="signin-helper" role="status">
+          {message}
+        </p>
+      )}
+      <div className="signin-account-links">
+        <button type="button" onClick={onSignIn}>
+          Already have an account? <span>Sign in ↗</span>
+        </button>
+        <button type="button" onClick={onExplore}>
+          Take a look around <ArrowRight size={13} />
+        </button>
+      </div>
+      <div className="signin-form-bottom">
+        Your ambition. Your pace. A clearer way forward.
+      </div>
+    </SignInScene>
   );
 }

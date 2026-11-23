@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { api } from "../lib/api";
 import AccountSignup from "./AccountSignup";
+import IdeaSuggestions from "../components/IdeaSuggestions";
+import "./early-access.css";
 import "./fonts.css";
 import "./landing.css";
 import { ArrowUpRight } from "lucide-react";
@@ -456,21 +458,41 @@ export default function Welcome({ onExplore, onSignIn }) {
             </div>
           </div>
         </section>
-        <section className="section signup-section" id="early-access">
+        <section
+          className="section signup-section early-access-journey"
+          id="early-access"
+        >
           <div className="wrap signup-grid">
             <div>
-              <div className="eyebrow">Be part of what’s next</div>
+              <div className="eyebrow">Every business starts somewhere</div>
               <h2>
-                Your next chapter.
+                You don’t need it
                 <br />
-                Get there early.
+                all figured out.
+                <br />
+                <em>Just a first step.</em>
               </h2>
               <p>
-                Join the Rivetara early-access list for product updates and news
-                about launch availability.
+                That idea you keep coming back to? Give it a little room to
+                grow. Join the early-access list for Rivetara product updates
+                and launch news.
               </p>
+              <div className="early-access-inspiration">
+                <IdeaSuggestions />
+              </div>
             </div>
             <form id="signup-form" onSubmit={submit}>
+              <div className="early-access-form-intro">
+                <span className="eyebrow">
+                  A little curiosity goes a long way
+                </span>
+                <h3>
+                  Your next chapter.
+                  <br />
+                  Get there early.
+                </h3>
+                <p>Leave your email. Be part of what comes next.</p>
+              </div>
               <label htmlFor="signup-email">Your email address</label>
               <div className="signup-row">
                 <input
@@ -504,6 +526,11 @@ export default function Welcome({ onExplore, onSignIn }) {
                   by email.
                 </span>
               </label>
+              <p className="early-access-reassurance">
+                No business plan needed. No payment details.
+                <br />
+                Just an email and a little ambition.
+              </p>
               <p id="signup-note" className="signup-note">
                 Your email is saved for Rivetara updates. Unsubscribe any time
                 using the link in future emails.{" "}
