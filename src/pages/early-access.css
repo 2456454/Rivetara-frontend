@@ -1,0 +1,247 @@
+.rivetara-landing .early-access-journey {
+  position: relative;
+  background: #15382e;
+  color: #f2f1e5;
+  overflow: hidden;
+}
+.rivetara-landing .early-access-journey:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #0e2f26dd, #15382ef7),
+    url("/images/signin-landscape.jpg") center 60% / cover;
+  pointer-events: none;
+}
+.rivetara-landing .early-access-journey .signup-grid {
+  position: relative;
+  gap: 100px;
+  align-items: center;
+}
+.rivetara-landing .early-access-journey h2 {
+  font:
+    400 56px/1.06 "Instrument Serif",
+    Georgia,
+    serif;
+  letter-spacing: -1.1px;
+  margin: 22px 0;
+}
+.rivetara-landing .early-access-journey h2 em {
+  color: #dce1c3;
+}
+.rivetara-landing .early-access-journey .signup-grid > div > p {
+  color: #c0cdb9;
+  max-width: 370px;
+  font-size: 13px;
+}
+.rivetara-landing .early-access-inspiration {
+  margin-top: 28px;
+  max-width: 430px;
+}
+.rivetara-landing .early-access-inspiration .signin-suggestions {
+  backdrop-filter: blur(8px);
+  background: #e1e7cd0a;
+  min-height: 250px;
+}
+.rivetara-landing .early-access-journey #signup-form {
+  background: #f2f0e6;
+  color: #213c2c;
+  padding: 34px;
+  border: 1px solid #e6e8d4;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 460px;
+  justify-self: end;
+}
+.rivetara-landing .early-access-form-intro .eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.2px;
+  color: #8b967c;
+}
+.rivetara-landing .early-access-form-intro h3 {
+  font:
+    400 42px/1.1 "Instrument Serif",
+    Georgia,
+    serif;
+  letter-spacing: -0.7px;
+  margin: 20px 0 15px;
+}
+.rivetara-landing .early-access-form-intro p {
+  font-size: 12px;
+  color: #7b8670;
+  line-height: 1.8;
+  margin: 0 0 27px;
+}
+.rivetara-landing .early-access-journey .signup-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rivetara-landing .early-access-journey .signup-row input {
+  width: 100%;
+  min-height: 51px;
+  flex: auto;
+  border-color: #cbd1bd;
+  background: #faf9f3;
+}
+.rivetara-landing .early-access-journey .signup-row .btn {
+  width: 100%;
+  justify-content: space-between;
+  padding: 15px 18px;
+}
+.rivetara-landing .early-access-journey .consent {
+  font-size: 10px !important;
+  margin: 19px 0 16px !important;
+}
+.rivetara-landing .early-access-reassurance {
+  font-size: 10px;
+  line-height: 1.8;
+  border-top: 1px solid #d6dbc8;
+  padding-top: 17px;
+  color: #89947a;
+  margin: 20px 0 15px;
+}
+.rivetara-landing .early-access-journey .signup-note {
+  font-size: 9px;
+  line-height: 1.8;
+  color: #8b947f;
+}
+.rivetara-landing .early-access-journey .signin-tip-quote {
+  font-size: 21px;
+  line-height: 1.35;
+  max-width: 100%;
+}
+.rivetara-landing .early-access-journey .signin-tip-detail {
+  font-size: 10px;
+  line-height: 1.7;
+}
+.rivetara-landing .early-access-journey .signin-tip-controls > span {
+  font-size: 8px;
+}
+.rivetara-landing .early-access-journey .signin-tip-top > span {
+  font-size: 8px;
+}
+.rivetara-landing .early-access-journey .signin-tip-location {
+  font-size: 9px;
+}
+.rivetara-landing .early-access-journey .signin-tip-location svg {
+  flex-shrink: 0;
+}
+@media (max-width: 1000px) {
+  .rivetara-landing .early-access-journey .signup-grid {
+    gap: 40px;
+  }
+  .rivetara-landing .early-access-journey #signup-form {
+    padding: 26px;
+  }
+  .rivetara-landing .early-access-journey h2 {
+    font-size: 48px;
+  }
+}
+@media (max-width: 760px) {
+  .rivetara-landing .early-access-journey .signup-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .rivetara-landing .early-access-journey h2 {
+    font-size: 46px;
+  }
+  .rivetara-landing .early-access-journey #signup-form {
+    max-width: none;
+    justify-self: stretch;
+  }
+  .rivetara-landing .early-access-inspiration {
+    max-width: none;
+  }
+  .rivetara-landing
+    .early-access-journey
+    .early-access-inspiration
+    .signin-suggestions {
+    min-height: 0;
+  }
+  .rivetara-landing .early-access-journey .signin-tip-quote {
+    font-size: 21px;
+    line-height: 1.4;
+  }
+  .rivetara-landing .early-access-form-intro h3 {
+    font-size: 40px;
+  }
+}
+.rivetara-landing .early-access-journey h2,
+.rivetara-landing .early-access-form-intro h3 {
+  font-family: "Manrope", Arial, sans-serif;
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 1.12;
+  letter-spacing: -1.6px;
+}
+.rivetara-landing .early-access-journey h2 em {
+  font-style: normal;
+}
+.rivetara-landing .early-access-journey .signin-tip-quote {
+  font-family: "DM Sans", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+}
+@media (max-width: 700px) {
+  .rivetara-landing .early-access-journey h2 {
+    font-size: 39px;
+  }
+  .rivetara-landing .early-access-form-intro h3 {
+    font-size: 35px;
+  }
+}
+.rivetara-landing
+  .early-access-journey
+  .early-access-inspiration
+  .signin-suggestions {
+  background: rgba(12, 37, 28, 0.92);
+  min-height: 255px;
+}
+.rivetara-landing
+  .early-access-journey
+  .signin-suggestions
+  .signin-tip-top
+  > span {
+  color: #dce3d0;
+  font-size: 10px;
+}
+.rivetara-landing
+  .early-access-journey
+  .signin-suggestions
+  .signin-tip-category {
+  color: #e3bd9d;
+  font-size: 11px;
+}
+.rivetara-landing .early-access-journey .signin-suggestions .signin-tip-quote {
+  font-size: 18px;
+  line-height: 1.55;
+  color: #f7f4e9;
+}
+.rivetara-landing .early-access-journey .signin-suggestions .signin-tip-detail {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #d4decb;
+}
+.rivetara-landing
+  .early-access-journey
+  .signin-suggestions
+  .signin-tip-location {
+  font-size: 11px;
+  color: #dce5d0;
+}
+@media (max-width: 700px) {
+  .rivetara-landing
+    .early-access-journey
+    .early-access-inspiration
+    .signin-suggestions {
+    min-height: 0;
+  }
+  .rivetara-landing
+    .early-access-journey
+    .signin-suggestions
+    .signin-tip-top
+    > span {
+    font-size: 9px;
+  }
+}

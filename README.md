@@ -44,3 +44,10 @@ retains its existing backend availability gate in `AccountSignup.jsx`.
 The email form calls `/api/early-access` through `VITE_API_BASE_URL`. Deploy the
 matching backend endpoint and its early-access database migration before this UI.
 Opt-ins are separate from paid accounts and no marketing emails are sent here.
+
+Sign-in, account signup and early access share the approved landscape treatment,
+modern typography and high-contrast inspiration panels. Fifty curated examples
+rotate in a shuffled, non-repeating sequence every eight seconds, pause on hover,
+and remain static when the visitor requests reduced motion. These are suggestions
+for conversations, not automatic business actions. Existing authentication and
+account-creation availability checks remain in place.
