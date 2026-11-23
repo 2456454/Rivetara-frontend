@@ -1241,3 +1241,99 @@ html:has(.rivetara-landing) {
     padding: 16px 20px;
   }
 }
+.rivetara-landing .business-preview-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  padding: 12px 18px 0;
+  background: #173b30;
+}
+.rivetara-landing .business-preview-tabs button {
+  display: block;
+  min-width: 0;
+  padding: 10px 4px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 5px 5px 0 0;
+  background: transparent;
+  color: #adbea1;
+  font:
+    500 11px/1.4 "Manrope",
+    Arial,
+    sans-serif;
+  cursor: pointer;
+  transition:
+    color 0.8s ease,
+    background-color 0.8s ease,
+    border-color 0.8s ease;
+}
+.rivetara-landing .business-preview-tabs button[aria-selected="true"] {
+  color: #edf1df;
+  background: #d9e3c60b;
+  border-bottom-color: #bc7958;
+}
+.rivetara-landing .business-preview-panel {
+  overflow: hidden;
+}
+.rivetara-landing .business-preview-scene {
+  min-height: 495px;
+  animation: business-preview-glide 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rivetara-landing .business-preview .whead {
+  min-height: 64px;
+  margin-bottom: 15px;
+}
+.rivetara-landing .business-preview .brief {
+  min-height: 136px;
+}
+.rivetara-landing .business-preview .task {
+  min-height: 73px;
+}
+.rivetara-landing .business-preview .floating {
+  min-height: 76px;
+}
+.rivetara-landing .business-preview .floating small {
+  line-height: 1.7;
+}
+.rivetara-landing .business-preview .whead h3 {
+  line-height: 1.35;
+}
+.rivetara-landing .business-preview .task div:nth-child(2) {
+  min-width: 0;
+}
+@keyframes business-preview-glide {
+  from {
+    transform: translateY(5px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@media (max-width: 760px) {
+  .rivetara-landing .business-preview-tabs {
+    padding: 10px 12px 0;
+  }
+  .rivetara-landing .business-preview-tabs button {
+    font-size: 10px;
+  }
+  .rivetara-landing .business-preview-scene {
+    min-height: 580px;
+  }
+  .rivetara-landing .business-preview .brief {
+    min-height: 160px;
+  }
+  .rivetara-landing .business-preview .task {
+    min-height: 91px;
+  }
+  .rivetara-landing .business-preview .floating {
+    min-height: 91px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rivetara-landing .business-preview-scene {
+    animation: none;
+  }
+  .rivetara-landing .business-preview-tabs button {
+    transition: none;
+  }
+}
