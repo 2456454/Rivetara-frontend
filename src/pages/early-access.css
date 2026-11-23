@@ -245,3 +245,28 @@
     font-size: 9px;
   }
 }
+.rivetara-landing .early-access-journey .signup-privacy {
+  border-top: 1px solid #d8ddca;
+  padding-top: 14px;
+  margin-top: 8px;
+}
+.rivetara-landing .early-access-journey .signup-privacy summary {
+  font:
+    500 11px/1.6 "DM Sans",
+    Arial,
+    sans-serif;
+  color: #5f7154;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.rivetara-landing .early-access-journey .signup-privacy summary:after {
+  color: #819273;
+}
+.rivetara-landing .early-access-journey .signup-privacy p {
+  font:
+    400 12px/1.8 "DM Sans",
+    Arial,
+    sans-serif;
+  color: #65755b;
+  margin: 12px 0 0;
+}

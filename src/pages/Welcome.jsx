@@ -533,8 +533,7 @@ export default function Welcome({ onExplore, onSignIn }) {
               </p>
               <p id="signup-note" className="signup-note">
                 Your email is saved for Rivetara updates. Unsubscribe any time
-                using the link in future emails.{" "}
-                <a href="#early-access-privacy">Privacy notice</a>
+                using the link in future emails.
               </p>
               <p
                 id="signup-status"
@@ -544,23 +543,20 @@ export default function Welcome({ onExplore, onSignIn }) {
               >
                 {status.text}
               </p>
+              <details className="signup-privacy" id="early-access-privacy">
+                <summary>Your email privacy</summary>
+                <p>
+                  We store your email address, signup date and consent to
+                  receive Rivetara early-access and product updates. The list is
+                  private and joining does not create a paid account or
+                  guarantee access. We use the hosted database supporting
+                  Rivetara to keep these records. You can withdraw consent using
+                  the unsubscribe link in future update emails or request
+                  removal by replying to an update. Automated update emails are
+                  not active yet.
+                </p>
+              </details>
             </form>
-          </div>
-        </section>
-        <section className="privacy-section" id="early-access-privacy">
-          <div className="wrap">
-            <details>
-              <summary>How we use your early-access email</summary>
-              <p>
-                We store your email address, signup date and consent to receive
-                Rivetara early-access and product updates. The list is private
-                and joining does not create a paid account or guarantee access.
-                We use the hosted database supporting Rivetara to keep these
-                records. You can withdraw consent using the unsubscribe link in
-                future update emails or request removal by replying to an
-                update. Automated update emails are not active yet.
-              </p>
-            </details>
           </div>
         </section>
         <section className="closing">
