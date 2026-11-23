@@ -102,9 +102,9 @@ export default function Welcome({ onExplore, onSignIn }) {
                 RIVETARA
               </a>
               <nav className="navlinks" aria-label="Main navigation">
-                <a href="#possibilities">The possibilities</a>
+                <a href="#possibilities">Why Rivetara</a>
                 <a href="#how-it-works">How it works</a>
-                <a href="#questions">Questions</a>
+                <a href="#questions">FAQs</a>
               </nav>
               <div className="navright">
                 <button
@@ -173,8 +173,8 @@ export default function Welcome({ onExplore, onSignIn }) {
                   <div className="windowbody">
                     <div className="whead">
                       <div>
-                        <h3>A little more breathing room.</h3>
-                        <p>Here’s what your business has lined up.</p>
+                        <h3>A clearer day starts here.</h3>
+                        <p>Your work, your plans, your next steps.</p>
                       </div>
                       <span className="avatar">JD</span>
                     </div>
