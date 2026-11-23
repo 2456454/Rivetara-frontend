@@ -694,7 +694,7 @@
 }
 /* A quiet upward slide replaces each idea; no counters or playback controls. */
 .signin-suggestions .signin-tip-random {
-  animation: signin-idea-arrive 0.65s cubic-bezier(0.22, 0.7, 0.25, 1);
+  animation: signin-idea-arrive 1s cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 154px;
 }
 .signin-suggestions.signin-suggestions {
@@ -816,7 +816,7 @@
 }
 @keyframes signin-idea-arrive {
   from {
-    transform: translateY(12px);
+    transform: translateY(7px);
   }
   to {
     transform: translateY(0);
