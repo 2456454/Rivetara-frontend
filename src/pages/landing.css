@@ -981,21 +981,6 @@ html:has(.rivetara-landing) {
   font: inherit;
   cursor: pointer;
 }
-.rivetara-landing .privacy-section {
-  padding: 0 0 35px;
-  background: #eeeee5;
-}
-.rivetara-landing .privacy-section details {
-  max-width: 700px;
-}
-.rivetara-landing .privacy-section summary {
-  font-size: 12px;
-}
-.rivetara-landing .privacy-section p {
-  font-size: 12px;
-  color: #63716a;
-  margin-top: 15px;
-}
 .rivetara-landing .task {
   margin: 0;
 }
