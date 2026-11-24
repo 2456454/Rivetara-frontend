@@ -134,7 +134,7 @@ h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
 </style>
 </head>
 <body class="quiz-page">
-<header><div class="wrap bar"><a class="brand" href="/preview/" aria-label="Rivetara home"><span class="mark" aria-hidden="true">R</span>RIVETARA</a><a href="/preview/">Back to homepage</a></div></header>
+<header><div class="wrap bar"><a class="brand" href="/" aria-label="Rivetara home"><span class="mark" aria-hidden="true">R</span>RIVETARA</a><a href="/">Back to homepage</a></div></header>
 <main class="wrap quiz-layout">
   <section class="section starter" id="starter">
     <div class="wrap">
@@ -190,11 +190,11 @@ h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
           <p class="milestone"><strong id="result-milestone"></strong></p>
           <ol id="result-actions"></ol>
           <p id="result-copy"></p>
-          <p class="disclosure">Check the assumptions before spending money or making commitments. <a href="/preview/#responsible-use">Using Rivetara’s guidance</a></p>
+          <p class="disclosure">Check the assumptions before spending money or making commitments. <a href="/#responsible-use">Using Rivetara’s guidance</a></p>
           <div class="plan-support">
             <h4>How Rivetara can help you keep going</h4>
             <p id="support-copy"></p>
-            <div class="actions"><a class="button dark" id="support-link" href="/preview/">Explore Rivetara</a><a href="/preview/#pricing">See the planned demo and membership</a></div>
+            <div class="actions"><a class="button dark" id="support-link" href="/">Explore Rivetara</a><a href="/#pricing">See the planned demo and membership</a></div>
           </div>
         </div>
       </div>
@@ -355,10 +355,10 @@ h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
       return item;
     }));
     const support = {
-      product: ['Use the product launch guide to work through your next decision, from testing a sample to comparing suppliers or planning delivery.', 'Open the product launch guide', '/preview/#launch-guide'],
+      product: ['Use the product launch guide to work through your next decision, from testing a sample to comparing suppliers or planning delivery.', 'Open the product launch guide', '/#launch-guide'],
       trade: ['See how Rivetara can turn your job notes and costs into a quote you can review before sending.', 'See a quote example', '/preview/explore?task=jobs#demo'],
       online: ['Use your starter plan to choose where to focus, then see Rivetara’s example workflow for finding customers and preparing a campaign.', 'See a customer-finding example', '/preview/explore?task=growth#demo'],
-      unsure: ['Use your plan to test one idea this week. Explore the business paths for examples of what you could do next as your idea takes shape.', 'Explore the business paths', '/preview/#paths'],
+      unsure: ['Use your plan to test one idea this week. Explore the business paths for examples of what you could do next as your idea takes shape.', 'Explore the business paths', '/#paths'],
     };
     const [description, label, link] = support[answers.path];
     document.getElementById('support-copy').textContent = description;

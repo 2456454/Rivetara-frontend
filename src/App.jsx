@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Nav from './components/Nav';
 import Account from './components/Account';
 import Today from './pages/Today';
@@ -19,6 +19,10 @@ function Workspace() {
 }
 export default function App() {
   const [screen, setScreen] = useState('welcome');
+  useEffect(() => {
+    if (screen !== 'welcome') return;
+    document.getElementById(window.location.hash.slice(1))?.scrollIntoView?.();
+  }, [screen]);
   if (screen === 'account') return <Account onBack={() => setScreen('welcome')}>{tenant => <Workspace key={tenant}/>}</Account>;
   if (screen === 'demo') return <main className="shell"><div className="card">
     <h1>A look inside Rivetara</h1><p>Illustrative examples only. These are not saved business records.</p>

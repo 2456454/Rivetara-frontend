@@ -119,9 +119,9 @@ h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
 <body>
 <header>
   <div class="wrap bar">
-    <a class="brand" href="/preview/" aria-label="Rivetara home"><span class="mark" aria-hidden="true">R</span>RIVETARA</a>
+    <a class="brand" href="/" aria-label="Rivetara home"><span class="mark" aria-hidden="true">R</span>RIVETARA</a>
     <nav aria-label="Main navigation">
-      <a href="/preview/explore">Software preview</a><a href="#ai-admin">AI admin</a><a href="#learn">Learn</a>
+      <a href="/preview/explore">Software preview</a><a href="/app">Open the workspace</a><a href="#ai-admin">AI admin</a><a href="#learn">Learn</a>
       <a href="/preview/explore#how-it-works">How it works</a>
       <details class="menu">
         <summary>Product launch</summary>
@@ -137,7 +137,7 @@ h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
       <a href="#paths">Business paths</a><a href="#pricing">Pricing</a>
       <a href="#faqs">FAQs</a>
     </nav>
-    <a class="button" href="/#early-access">Get early access</a>
+    <a class="button" href="/app#early-access">Get early access</a>
   </div>
 </header>
 <main>
@@ -242,7 +242,7 @@ h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
         <p><strong>5-day free demo planned</strong></p>
         <p class="price">£19.99 <span>per month after the demo</span></p>
         <p class="note">Provisional price. Join early access for launch updates. Your signup carries no charge. We’ll confirm trial and billing terms before enrolment opens.</p>
-        <a class="button dark" href="/#early-access">Sign up for early access</a>
+        <a class="button dark" href="/app#early-access">Sign up for early access</a>
       </article>
     </div>
   </section>
@@ -259,7 +259,7 @@ h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
     </div>
   </section>
 </main>
-<footer><div class="wrap bar"><a class="brand" href="/preview/" aria-label="Rivetara home"><span class="mark" aria-hidden="true">R</span>RIVETARA</a><a href="/preview/search-preview.html">See the proposed Google result</a><a href="/#early-access-privacy">Privacy notice</a></div></footer>
+<footer><div class="wrap bar"><a class="brand" href="/" aria-label="Rivetara home"><span class="mark" aria-hidden="true">R</span>RIVETARA</a><a href="/preview/search-preview.html">See the proposed Google result</a><a href="/app#early-access-privacy">Privacy notice</a></div></footer>
 <script>
   function openLinkedStage() {
     const stage = document.getElementById(window.location.hash.slice(1));
@@ -281,10 +281,11 @@ h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
     });
   });
 
+  if (window.location.hash === '#early-access') window.location.replace('/app#early-access');
   if (window.location.hash === '#starter') window.location.replace('/preview/start');
 
   // Forward bookmarks from the original front page to its new route.
-  const originalSections = ['possibilities', 'demo', 'how-it-works', 'questions', 'early-access'];
+  const originalSections = ['possibilities', 'demo', 'how-it-works', 'questions'];
   if (originalSections.includes(window.location.hash.slice(1))) {
     window.location.replace('/preview/explore' + window.location.hash);
   }

@@ -10,14 +10,13 @@ export function privatePreview(worker, {accessKey, bridgeSecret}) {
       res.writeHead(404).end();
       return;
     }
-    if (pathname !== '/preview' && !pathname.startsWith('/preview/')) return next();
+    if (pathname === '/healthz' && ['GET', 'HEAD'].includes(req.method)) {
+      res.writeHead(200, {'Cache-Control': 'no-store', 'Content-Type': 'text/plain'}).end('ok');
+      return;
+    }
     const headers = {'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex'};
     if (!expected) {
       res.writeHead(503, headers).end('Private preview is unavailable.');
-      return;
-    }
-    if (pathname === '/preview') {
-      res.writeHead(302, {...headers, Location: '/preview/'}).end();
       return;
     }
     const actual = Buffer.from(req.headers.authorization || '');
@@ -25,10 +24,19 @@ export function privatePreview(worker, {accessKey, bridgeSecret}) {
       res.writeHead(401, {...headers, 'WWW-Authenticate': 'Basic realm="Rivetara private preview", charset="UTF-8"'}).end('Sign in to the private preview.');
       return;
     }
+    if (pathname === '/preview' || pathname === '/preview/' || pathname === '/index.html') {
+      res.writeHead(302, {...headers, Location: '/'}).end();
+      return;
+    }
+    if (pathname !== '/' && !pathname.startsWith('/preview/')) {
+      for (const [name, value] of Object.entries(headers)) res.setHeader(name, value);
+      if (pathname === '/app' || pathname === '/app/') req.url = '/index.html';
+      return next();
+    }
     try {
       const protocol = req.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
       const url = new URL(req.url, protocol + '://' + req.headers.host);
-      url.pathname = url.pathname.slice('/preview'.length);
+      if (pathname !== '/') url.pathname = url.pathname.slice('/preview'.length);
       const requestHeaders = new Headers(req.headers);
       requestHeaders.delete('authorization');
       const init = {method: req.method, headers: requestHeaders};

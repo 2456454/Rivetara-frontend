@@ -7,6 +7,7 @@ import { privatePreview } from '../preview/railway.mjs';
 test('the Railway gateway protects the preview and preserves the original request origin', async () => {
   const worker = {
     async fetch(request, env) {
+      if (new URL(request.url).pathname === '/') return new Response('New Rivetara homepage');
       assert.equal(new URL(request.url).pathname, '/api/starter-plan');
       assert.equal(new URL(request.url).origin, request.headers.get('Origin'));
       assert.equal(request.headers.get('Authorization'), null);
@@ -21,7 +22,13 @@ test('the Railway gateway protects the preview and preserves the original reques
   await once(server, 'listening');
   const base = 'http://127.0.0.1:' + server.address().port;
   try {
-    assert.equal(await (await fetch(base)).text(), 'Public app');
+    const auth = {Authorization: 'Basic ' + Buffer.from('rivetara:test-access').toString('base64')};
+    for (const path of ['/', '/app', '/index.html', '/assets/site.js']) {
+      assert.equal((await fetch(base + path)).status, 401);
+    }
+    assert.equal(await (await fetch(base + '/healthz')).text(), 'ok');
+    assert.equal(await (await fetch(base, {headers: auth})).text(), 'New Rivetara homepage');
+    assert.equal(await (await fetch(base + '/app', {headers: auth})).text(), 'Public app');
     assert.equal((await fetch(base + '/preview/api/starter-plan', {method: 'POST'})).status, 401);
     const response = await fetch(base + '/preview/api/starter-plan', {
       method: 'POST',
