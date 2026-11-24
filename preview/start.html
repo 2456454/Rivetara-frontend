@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Plan your first business with Rivetara. Find your next steps for an online business, a trade or service, or a physical product, from idea to first customer and beyond.">
+<title>Find Your Starting Point | Rivetara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--forest:#102f27;--ink:#162e28;--paper:#f5f3ed;--lime:#e7eddc;--line:#d1d8cd;--copper:#dc9b79}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.65 'DM Sans',system-ui,sans-serif}
+a{color:inherit;text-underline-offset:.25em}
+a:focus-visible,summary:focus-visible{outline:2px solid #d28c64;outline-offset:5px}
+.wrap{width:min(1168px,calc(100% - 48px));margin:auto}
+header,.hero,footer{background:var(--forest);color:var(--lime)}
+.bar{display:flex;gap:1.5rem;align-items:center;justify-content:space-between;min-height:104px;border-bottom:1px solid #ffffff26}
+.brand{display:inline-flex;gap:.8rem;align-items:center;font:800 1.35rem Manrope,system-ui,sans-serif;letter-spacing:.16em;text-decoration:none}
+.mark{font:italic 800 2rem Manrope,system-ui,sans-serif;color:var(--copper);letter-spacing:0}
+nav,.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.5rem}
+nav a{text-decoration:none}
+nav a:hover{text-decoration:underline}
+.button{display:inline-flex;justify-content:center;align-items:center;min-height:50px;padding:.65rem 1.25rem;border-radius:4px;background:var(--lime);color:var(--forest);font-weight:700;text-decoration:none;border:1px solid transparent}
+.button:hover{background:#fff}
+.button.dark{background:var(--forest);color:var(--lime)}
+.button.dark:hover{background:#215344}
+.hero-grid,.split{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(2rem,7vw,7rem);align-items:center}
+.hero-grid{padding:clamp(3.5rem,8vw,7rem) 0}
+h1,h2,h3{font-family:Manrope,system-ui,sans-serif;letter-spacing:-.045em;line-height:1.1;margin:0}
+h1{font-size:clamp(2.8rem,6.6vw,6.1rem);max-width:11ch}
+h1 span{color:var(--copper)}
+h2{font-size:clamp(2rem,4vw,3.5rem)}
+h3{font-size:1.5rem}
+p{margin:1rem 0}
+.hero p{max-width:52ch;color:#d6e0d6;font-size:1.13rem}
+.actions{margin-top:1.65rem}
+.route{margin:0;padding:1.5rem 1.75rem;background:#194036;border:1px solid #698177;border-radius:6px}
+.route h2{font-size:1.55rem}
+.route ol{margin:1rem 0 0;padding:0;list-style:none}
+.route li{padding:.75rem 0;border-top:1px solid #ffffff30}
+.section{padding:clamp(3rem,7vw,6rem) 0}
+.split{align-items:start}
+.intro p{max-width:44ch}
+details{border-top:1px solid var(--line)}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{padding:1rem 0;font-weight:700;cursor:pointer}
+details p{margin:0 0 1.2rem}
+.plans{background:#e7ece2}
+.plan{background:var(--paper);border:1px solid var(--line);padding:clamp(1.25rem,4vw,2.5rem);border-radius:6px}
+.price{font:800 clamp(2.2rem,5vw,3.35rem)/1.2 Manrope,system-ui,sans-serif;letter-spacing:-.05em}
+.price span{font:600 1rem 'DM Sans',system-ui,sans-serif;letter-spacing:normal}
+.plan .note{font-size:.95rem}
+footer .bar{min-height:84px;border:0}
+@media(max-width:780px){.hero-grid,.split{grid-template-columns:1fr}.bar{flex-wrap:wrap;padding:1rem 0;gap:.8rem 1.25rem}}
+@media(max-width:480px){.wrap{width:calc(100% - 32px)}nav{gap:.65rem 1rem}.bar .button{min-height:42px;padding:.4rem .75rem}.route{padding:1.2rem}}
+
+.hero-grid{gap:clamp(2rem,6vw,5rem)}
+h1{max-width:15ch;font-size:clamp(2.75rem,6.1vw,5.65rem)}
+.route li{display:flex;gap:.75rem;align-items:baseline}
+.route li::before{content:'✓';color:var(--copper);font-weight:700}
+.route a{text-decoration:none}
+.route a:hover{text-decoration:underline}
+.menu{position:relative;border:0}
+.menu summary{padding:0;font-weight:400}
+.menu-panel{position:absolute;top:100%;left:0;z-index:2;width:min(280px,80vw);padding:.55rem;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 28px #0003}
+.menu-panel a{display:block;padding:.45rem .65rem}
+.preview-link{display:inline-block;font-size:.9rem}
+.search-card{background:white;padding:1.5rem;border:1px solid var(--line);border-radius:6px;margin:1rem 0}
+.search-card h2{color:#1a0dab;font:1.35rem/1.35 Arial,sans-serif;letter-spacing:normal;margin-top:.35rem}
+.search-card p{margin:.4rem 0}
+@media(max-width:560px){.menu-panel{position:static;box-shadow:none;margin-top:.5rem}.menu[open]{width:100%}}
+
+.paths{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.75rem 0}
+.path,.interview{padding:1.6rem;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+.starter{background:#e7ece2}
+.interview label{display:block;margin:.8rem 0 .2rem;font-weight:700}
+.interview input,.interview select{width:100%;padding:.7rem;font:inherit;color:inherit;border:1px solid #698177;border-radius:4px;background:#fff}
+.interview button{font:inherit;font-weight:700;cursor:pointer}
+.interview small{display:block;margin-top:.8rem}
+.interview ol{padding-left:1.3rem}.interview li{margin:.6rem 0}
+.result h3{margin-top:1.3rem}
+@media(max-width:780px){.paths{grid-template-columns:1fr}}
+
+.interview{position:relative;overflow:hidden}
+.plan-wait,.result{padding:clamp(1rem,4vw,1.6rem);border-radius:6px}
+.plan-wait{margin-top:1.4rem;background:var(--forest);color:var(--lime)}
+.plan-wait h3{color:var(--copper)}
+.plan-wait p{margin:.65rem 0}
+.plan-wait ul{padding-left:1.2rem;margin:.7rem 0 0}
+.plan-wait progress{width:100%;height:.65rem;accent-color:var(--copper)}
+.result{margin-top:1.4rem;background:#e7ece2;border-left:4px solid #a65331}
+.result h3{margin-top:0}
+.result .milestone{padding:.65rem .85rem;background:var(--paper);border-radius:4px}
+.result .source{font-size:.92rem;margin:0 0 .5rem}
+
+.starter{padding:clamp(2.25rem,5vw,4rem) 0;background:var(--forest);color:var(--lime)}
+.starter .wrap{max-width:740px}
+.starter .intro p{max-width:none;margin:.55rem 0 1rem}
+.starter .interview{color:var(--ink);padding:clamp(1rem,4vw,1.8rem);border:0}
+.step-meter{display:flex;align-items:center;gap:.8rem;margin:0 0 1rem;font-size:.9rem;font-weight:700}
+.step-meter progress{flex:1;min-width:0;height:.5rem;accent-color:#a65331}
+.question{border:0;margin:0;padding:0;min-width:0}
+.question legend{font:800 clamp(1.25rem,3vw,1.55rem)/1.25 Manrope,system-ui,sans-serif;padding:0}
+.question .hint,.interview .disclosure{font-size:.92rem;margin:.55rem 0;color:#456259}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin:.75rem 0 0}
+.choices label{display:flex;align-items:center;gap:.55rem;min-height:46px;margin:0;padding:.55rem .65rem;border:1px solid #698177;border-radius:4px;background:#fff;cursor:pointer}
+.choices label:has(input:checked){background:#e7eddc;border-color:var(--forest);box-shadow:inset 0 0 0 1px var(--forest)}
+.choices input{width:auto;margin:0;accent-color:var(--forest)}
+.question>input,.question>select{margin-top:.55rem}
+.wizard-controls{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem}
+.wizard-back{background:none;color:var(--forest);padding:.55rem;border:0;text-decoration:underline;text-underline-offset:.2em}
+.interview [hidden]{display:none!important}
+@media(max-width:520px){.choices{grid-template-columns:1fr}}
+
+.quiz-page{background:var(--forest);min-height:100vh}
+.quiz-page header .bar{min-height:76px}
+.quiz-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(1rem,3vw,2.5rem);padding:clamp(1rem,4vw,3rem) 0 3rem;align-items:start}
+.quiz-page .starter{padding:0}
+.quiz-page .starter .wrap{width:100%}
+.quiz-page .intro{margin-bottom:1.25rem}
+.quiz-page .intro h1{font-size:clamp(2rem,5vw,3.4rem);max-width:14ch}
+.quiz-story{overflow:hidden;border:1px solid #ffffff26;border-radius:6px;background:#183b31;color:var(--lime)}
+.quiz-story img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 54%}
+.quiz-story div{padding:clamp(1.2rem,4vw,2rem)}
+.quiz-story h2{font-size:clamp(1.5rem,3vw,2.35rem)}
+.quiz-story p{margin:.75rem 0 0}
+.plan-support{border-top:1px solid var(--line);padding-top:1rem;margin-top:1rem}
+.plan-support h4{margin:0;font-size:1.08rem}
+.plan-support p{margin:.45rem 0 0}
+@media(max-width:760px){.quiz-layout{grid-template-columns:1fr}.quiz-story img{aspect-ratio:16/8}}
+</style>
+</head>
+<body class="quiz-page">
+<header><div class="wrap bar"><a class="brand" href="/preview/" aria-label="Rivetara home"><span class="mark" aria-hidden="true">R</span>RIVETARA</a><a href="/preview/">Back to homepage</a></div></header>
+<main class="wrap quiz-layout">
+  <section class="section starter" id="starter">
+    <div class="wrap">
+      <div class="intro">
+        <h1>Find your starting point</h1>
+        <p>Six quick questions to find a first milestone and three steps you can take this week.</p>
+      </div>
+      <div class="interview">
+        <form id="interview" novalidate>
+          <div class="step-meter"><span id="step-count">Question 1 of 6</span><progress id="step-progress" max="6" value="1" aria-labelledby="step-count"></progress></div>
+          <fieldset class="question"><legend tabindex="-1">What would you like to build?</legend>
+            <div class="choices">
+              <label><input type="radio" name="path" value="online" required> An online business</label>
+              <label><input type="radio" name="path" value="trade"> A trade or service</label>
+              <label><input type="radio" name="path" value="product"> A physical product</label>
+              <label><input type="radio" name="path" value="unsure"> I’m still choosing an idea</label>
+            </div>
+          </fieldset>
+          <fieldset class="question" hidden><legend tabindex="-1">What’s your idea or a skill you could use?</legend>
+            <p class="hint" id="idea-hint">Start with something you enjoy or something people ask you for help with.</p>
+            <input id="idea" name="idea" aria-label="Your idea or skill" aria-describedby="idea-hint" required maxlength="160" placeholder="For example, I’m good with numbers">
+          </fieldset>
+          <fieldset class="question" hidden><legend tabindex="-1">Who would you like to help?</legend>
+            <p class="hint" id="buyer-hint">Optional. Leave this blank if you’re still finding your audience.</p>
+            <input id="buyer" name="buyer" aria-label="Who you’d like to help" aria-describedby="buyer-hint" maxlength="100" placeholder="For example, local shops">
+          </fieldset>
+          <fieldset class="question" hidden><legend tabindex="-1">How far have you got?</legend>
+            <select id="stage" name="stage" aria-label="Business stage" required>
+              <option value="">Choose your stage</option><option value="idea">I’m exploring the idea</option><option value="tested">I’ve spoken to customers or tested it</option><option value="sold">I’ve made a sale</option>
+            </select>
+          </fieldset>
+          <fieldset class="question" hidden><legend tabindex="-1">What would help most right now?</legend>
+            <select id="blocker" name="blocker" aria-label="Biggest obstacle" required>
+              <option value="">Choose what would help</option><option value="offer">Knowing what to sell</option><option value="reach">Finding customers</option><option value="cost">Working out costs</option><option value="delivery">Delivering what I sell</option>
+            </select>
+          </fieldset>
+          <fieldset class="question" hidden><legend tabindex="-1">How much time can you give it this week?</legend>
+            <select id="time" name="time" aria-label="Available time this week" required><option value="">Choose your available time</option><option>A spare hour</option><option>A few evenings</option><option>A full day or more</option></select>
+          </fieldset>
+          <div class="wizard-controls"><button class="button dark" type="submit">Continue</button><button class="wizard-back" type="button" id="wizard-back" hidden>Back</button></div>
+          <p class="disclosure" id="interview-disclosure" hidden>We send your answers to Rivetara’s backend and OpenAI to generate your plan. Use example details in this private preview. Check suggestions against your situation before acting on them.</p>
+          <div class="plan-wait" id="plan-wait" hidden>
+            <h3>Putting your plan together</h3>
+            <p id="interview-status" role="status"></p>
+            <progress aria-label="Creating your starter plan"></progress>
+            <ul><li>Find a strength you can build on</li><li>Choose a milestone for your stage</li><li>Turn it into three manageable actions</li></ul>
+          </div>
+        </form>
+        <div class="result" id="starter-result" hidden>
+          <p class="source" id="result-source"></p>
+          <h3 tabindex="-1" id="result-title"></h3>
+          <p id="result-pitch"></p>
+          <p class="milestone"><strong id="result-milestone"></strong></p>
+          <ol id="result-actions"></ol>
+          <p id="result-copy"></p>
+          <p class="disclosure">Check the assumptions before spending money or making commitments. <a href="/preview/#responsible-use">Using Rivetara’s guidance</a></p>
+          <div class="plan-support">
+            <h4>How Rivetara can help you keep going</h4>
+            <p id="support-copy"></p>
+            <div class="actions"><a class="button dark" id="support-link" href="/preview/">Explore Rivetara</a><a href="/preview/#pricing">See the planned demo and membership</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="quiz-story" aria-labelledby="plan-benefits">
+    <img src="__STARTER_IMAGE__" alt="A customer taps their phone to pay at a shop counter" width="1200" height="900" fetchpriority="high">
+    <div>
+      <h2 id="plan-benefits">Picture your first paying customer.</h2>
+      <p>The first order, booking or job is a moment you’ll remember. Answer six questions to see what you can do this week to get closer.</p>
+    </div>
+  </aside>
+</main>
+<script>
+  const interview = document.getElementById('interview');
+  const questions = [...interview.querySelectorAll('.question')];
+  const nextButton = interview.querySelector('button[type="submit"]');
+  const backButton = document.getElementById('wizard-back');
+  const resultPanel = document.getElementById('starter-result');
+  let currentQuestion = 0;
+
+  function showQuestion(index) {
+    currentQuestion = index;
+    questions.forEach((question, position) => { question.hidden = position !== index; });
+    document.getElementById('step-count').textContent = 'Question ' + (index + 1) + ' of ' + questions.length;
+    document.getElementById('step-progress').value = index + 1;
+    const last = index === questions.length - 1;
+    nextButton.textContent = last ? 'Build my starter plan' : 'Continue';
+    document.getElementById('interview-disclosure').hidden = !last;
+    backButton.hidden = index === 0;
+    resultPanel.hidden = true;
+    questions[index].querySelector('legend').focus({preventScroll: true});
+  }
+
+  backButton.addEventListener('click', () => showQuestion(currentQuestion - 1));
+  const chosenPath = new URLSearchParams(window.location.search).get('path');
+  if (['online', 'trade', 'product', 'unsure'].includes(chosenPath)) {
+    interview.elements.path.value = chosenPath;
+  }
+
+  function buildQuickPlan({path, buyer, stage, blocker, time}) {
+    const options = {
+      unsure: {
+        offer: 'List two small services you could offer using skills you already have. Pick the one you could show someone this week.',
+        reach: 'Choose one group you can actually reach. Ask two people what they spend time on or struggle to do, and listen for a problem your skills could solve.',
+        cost: 'Choose an idea you can test with tools you already have. Write down any costs you would face before the first sale.',
+        delivery: 'Sketch a sample task you could finish for one person. Describe what you would hand over and when.',
+      },
+      online: {
+        offer: 'Write one sentence describing what you offer, who it helps and the result they get.',
+        reach: 'Write three phrases a customer might Google. Look at the results and draft one page that answers a specific question.',
+        cost: 'List your platform, payment and delivery costs. Estimate what one sale would leave after fees.',
+        delivery: 'Walk through how one customer would order, pay and receive what you sell.',
+      },
+      trade: {
+        offer: 'Pick one job you can deliver confidently. Write down what is included and what would cost extra.',
+        reach: 'Pick one neighbourhood you can serve. Ask a local contact how they find someone for that job.',
+        cost: 'Draft a quote with labour, materials, travel and overhead. Check what it would leave you per hour.',
+        delivery: 'Write a checklist for arrival, completion, customer sign-off and invoicing.',
+      },
+      product: {
+        offer: 'Sketch a test product and write down the one problem the sample must solve.',
+        reach: 'Show a sketch or sample to two likely buyers. Ask what they use today and what they would change.',
+        cost: 'Compare quotes for a small and larger batch. Include packaging, freight and any import costs.',
+        delivery: 'Pack one sample and check the cost and delivery time for shipping it yourself or using a fulfilment service.',
+      },
+    };
+    const early = stage === 'idea';
+    const sold = stage === 'sold';
+    const audience = buyer && !/^everyone$/i.test(buyer) ? 'the customers you want to help' : 'people you can reach this week';
+    return {
+      encouragement: sold
+        ? 'You’ve already made a sale. Use what worked to give yourself a better shot at the next one.'
+        : early
+          ? 'You can take the first step this week. One honest conversation can show you where to put your energy next.'
+          : 'You’ve already put your idea in front of people. Use what you learned to make an offer you’d feel good about sending.',
+      milestone: sold ? 'Set up a repeatable way to win your next customer.'
+        : early ? 'Get one useful response from a potential customer.' : 'Make one clear offer to a potential customer.',
+      actions: [
+        (time === 'A spare hour' ? 'Spend your first 20 minutes on this. ' : '') + options[path][blocker],
+        sold ? 'Note where your first customer came from and what made them buy.'
+          : 'Write a one-sentence offer for ' + audience + ', then ask one person in that group what would make it useful to them.',
+        'Write down what you learned and pick one change to try next week.',
+      ],
+    };
+  }
+
+  interview.addEventListener('submit', async event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const button = nextButton;
+    if (button.disabled) return;
+    const currentInput = questions[currentQuestion].querySelector('input, select');
+    if (currentInput.name === 'idea') currentInput.value = currentInput.value.trim();
+    if (!currentInput.reportValidity()) return;
+    if (currentQuestion < questions.length - 1) {
+      showQuestion(currentQuestion + 1);
+      return;
+    }
+    const status = document.getElementById('interview-status');
+    const waiting = document.getElementById('plan-wait');
+    const result = document.getElementById('starter-result');
+    const answers = Object.fromEntries(new FormData(form));
+    answers.idea = answers.idea.trim();
+    answers.buyer = answers.buyer.trim();
+    if (!answers.idea) {
+      form.elements.idea.value = '';
+      form.elements.idea.reportValidity();
+      return;
+    }
+    result.hidden = true;
+    button.disabled = true;
+    backButton.disabled = true;
+    button.textContent = 'Building your plan…';
+    waiting.hidden = false;
+    status.textContent = 'Looking at your idea and where you are today.';
+    const update = setTimeout(() => {
+      status.textContent = 'Still working. You’ll get a starter plan even if the AI is unavailable.';
+    }, 6500);
+    let source = 'Personalised AI plan';
+    let plan;
+    try {
+      const response = await fetch('/preview/api/starter-plan', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(answers),
+        signal: AbortSignal.timeout(24000),
+      });
+      if (!response.ok) throw new Error('Starter plan unavailable');
+      plan = await response.json();
+      if (typeof plan?.encouragement !== 'string' || typeof plan.milestone !== 'string'
+          || !Array.isArray(plan.actions) || plan.actions.length !== 3
+          || !plan.actions.every(action => typeof action === 'string')) throw new Error('Invalid starter plan');
+    } catch {
+      plan = buildQuickPlan(answers);
+      source = 'Quick starter plan · AI temporarily unavailable';
+    } finally {
+      clearTimeout(update);
+      waiting.hidden = true;
+      button.disabled = false;
+      backButton.disabled = false;
+      button.textContent = 'Build my starter plan again';
+    }
+    document.getElementById('result-source').textContent = source;
+    document.getElementById('result-title').textContent = 'Your starter plan';
+    const pitches = {
+      online: 'Build an online business that gives you more control over how you earn. Rivetara can help you shape an offer worth buying, choose where to find customers and turn your next move into a plan you can act on this week.',
+      trade: 'Build the business you want your name on. Rivetara can help you decide which jobs to go after, work through what to charge and see how to put together a quote that customers can say yes to.',
+      product: 'Picture someone buying a product you brought to life. Rivetara can help you plan your first test, compare suppliers and work out how to get your first orders out the door.',
+      unsure: 'You can build something that’s yours and give yourself more control over how you earn. Rivetara can help you turn a skill into an offer worth testing, find the right people to talk to and choose what to do this week.',
+    };
+    document.getElementById('result-pitch').textContent = pitches[answers.path];
+    document.getElementById('result-copy').textContent = plan.encouragement;
+    document.getElementById('result-milestone').textContent = plan.milestone;
+    document.getElementById('result-actions').replaceChildren(...plan.actions.map(action => {
+      const item = document.createElement('li');
+      item.textContent = action;
+      return item;
+    }));
+    const support = {
+      product: ['Use the product launch guide to work through your next decision, from testing a sample to comparing suppliers or planning delivery.', 'Open the product launch guide', '/preview/#launch-guide'],
+      trade: ['See how Rivetara can turn your job notes and costs into a quote you can review before sending.', 'See a quote example', '/preview/explore?task=jobs#demo'],
+      online: ['Use your starter plan to choose where to focus, then see Rivetara’s example workflow for finding customers and preparing a campaign.', 'See a customer-finding example', '/preview/explore?task=growth#demo'],
+      unsure: ['Use your plan to test one idea this week. Explore the business paths for examples of what you could do next as your idea takes shape.', 'Explore the business paths', '/preview/#paths'],
+    };
+    const [description, label, link] = support[answers.path];
+    document.getElementById('support-copy').textContent = description;
+    const supportLink = document.getElementById('support-link');
+    supportLink.textContent = label;
+    supportLink.href = link;
+    result.hidden = false;
+    document.getElementById('result-title').focus();
+  });
+</script>
+</body>
+</html>
